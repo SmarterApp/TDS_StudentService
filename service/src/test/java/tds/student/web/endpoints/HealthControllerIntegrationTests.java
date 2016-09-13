@@ -16,8 +16,8 @@ public class HealthControllerIntegrationTests {
     public void shouldReturnOk() {
         given()
             .accept(ContentType.JSON)
-            .when()
-        .get("/student/isAlive")
+        .when()
+            .get("/student/isAlive")
         .then()
             .contentType(ContentType.JSON)
             .statusCode(200);

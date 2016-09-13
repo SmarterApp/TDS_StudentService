@@ -96,13 +96,14 @@
             <version>2.3.9</version>
         </dependency>
 
+        <!-- Unit testing dependencies -->
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
             <version>${flyway.version}</version>
+            <scope>test</scope>
         </dependency>
 
-        <!-- Unit testing dependencies -->
         <dependency>
             <groupId>com.jayway.jsonpath</groupId>
             <artifactId>json-path</artifactId>

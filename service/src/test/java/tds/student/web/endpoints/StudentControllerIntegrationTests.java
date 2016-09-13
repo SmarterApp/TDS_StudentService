@@ -13,12 +13,12 @@ import static org.hamcrest.Matchers.equalTo;
 @SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class StudentControllerIntegrationTests {
     @Test
-    public void shouldReturnSession() {
+    public void shouldReturnStudent() {
         given()
             .accept(ContentType.JSON)
-            .when()
+        .when()
             .get(String.format("/student/%d", 1))
-            .then()
+        .then()
             .contentType(ContentType.JSON)
             .statusCode(200)
             .body("student.id", equalTo(1))
@@ -31,9 +31,9 @@ public class StudentControllerIntegrationTests {
     public void shouldReturnNotFound() {
         given()
             .accept(ContentType.JSON)
-            .when()
+        .when()
             .get(String.format("/student/%s", 999999))
-            .then()
+        .then()
             .statusCode(404);
     }
 }
