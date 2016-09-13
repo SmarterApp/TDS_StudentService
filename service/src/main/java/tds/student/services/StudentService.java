@@ -10,7 +10,7 @@ import tds.student.Student;
 public interface StudentService {
     /**
      * Retrieves the {@link tds.student.Student Student} by id
-     * @param id student id
+     * @param id student key
      * @return student if found otherwise empty optional
      */
     Optional<Student> getStudent(long id);
