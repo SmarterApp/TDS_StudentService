@@ -21,9 +21,9 @@ public class StudentRepositoryImplIntegrationTests {
 
     @Test
     public void shouldRetrieveStudentForId() {
-        Optional<Student> studentOptional = studentRepository.getStudentById(1);
-        assertThat(studentOptional.isPresent()).isTrue();
-        Student student = studentOptional.get();
+        Optional<Student> maybeStudent = studentRepository.findStudentById(1);
+        assertThat(maybeStudent.isPresent()).isTrue();
+        Student student = maybeStudent.get();
         assertThat(student.getId()).isEqualTo(1);
         assertThat(student.getClientName()).isEqualTo("SBAC_PT");
         assertThat(student.getStudentId()).isEqualTo("adv001");
@@ -32,7 +32,7 @@ public class StudentRepositoryImplIntegrationTests {
 
     @Test
     public void shouldHandleRetrieveStudentIdNotFound() {
-        Optional<Student> studentOptional = studentRepository.getStudentById(99);
+        Optional<Student> studentOptional = studentRepository.findStudentById(99);
         assertThat(studentOptional.isPresent()).isFalse();
     }
 }

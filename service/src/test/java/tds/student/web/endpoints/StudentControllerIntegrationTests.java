@@ -23,7 +23,7 @@ public class StudentControllerIntegrationTests {
         given()
             .accept(ContentType.JSON)
         .when()
-            .get(String.format("/student/%d", 1))
+            .get(String.format("/students/%d", 1))
         .then()
             .contentType(ContentType.JSON)
             .statusCode(200)
@@ -38,7 +38,7 @@ public class StudentControllerIntegrationTests {
         given()
             .accept(ContentType.JSON)
         .when()
-            .get(String.format("/student/%s", 999999))
+            .get(String.format("/students/%s", 999999))
         .then()
             .statusCode(404);
     }

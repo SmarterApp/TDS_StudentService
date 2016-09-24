@@ -8,6 +8,9 @@ import tds.student.web.endpoints.StudentController;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
+/**
+ * HATEOAS resource representing a {@link tds.student.Student}
+ */
 public class StudentResource extends ResourceSupport {
     private final Student student;
 
@@ -15,10 +18,13 @@ public class StudentResource extends ResourceSupport {
         this.student = student;
         this.add(linkTo(
             methodOn(StudentController.class)
-                .getStudentById(student.getId()))
+                .findStudentById(student.getId()))
             .withSelfRel());
     }
 
+    /**
+     * @return the {@link tds.student.Student}
+     */
     public Student getStudent() {
         return student;
     }

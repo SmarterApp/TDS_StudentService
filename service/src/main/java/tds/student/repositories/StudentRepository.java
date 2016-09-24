@@ -9,10 +9,10 @@ import tds.student.Student;
  */
 public interface StudentRepository {
     /**
-     * Get {@link tds.student.Student Student} by id
+     * Find {@link tds.student.Student Student} by id
      *
      * @param id unique id for the student
      * @return {@link tds.student.Student Student} if found otherwise empty
      */
-    Optional<Student> getStudentById(long id);
+    Optional<Student> findStudentById(long id);
 }
