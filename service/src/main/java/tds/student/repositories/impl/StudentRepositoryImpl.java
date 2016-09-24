@@ -14,7 +14,7 @@ import tds.student.Student;
 import tds.student.repositories.StudentRepository;
 
 @Repository
-public class StudentRepositoryImpl implements StudentRepository {
+class StudentRepositoryImpl implements StudentRepository {
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -32,14 +32,10 @@ public class StudentRepositoryImpl implements StudentRepository {
 
         Optional<Student> student;
         try {
-            student = Optional.of(jdbcTemplate.queryForObject(query, parameters, (rs, rowNum) -> {
-                Student result = new Student();
-                result.setId(rs.getLong("id"));
-                result.setStudentId(rs.getString("studentid"));
-                result.setStateCode(rs.getString("statecode"));
-                result.setClientName(rs.getString("clientname"));
-                return result;
-            }));
+            student = Optional.of(jdbcTemplate.queryForObject(query, parameters, (rs, rowNum) -> new Student(rs.getLong("id"),
+                rs.getString("studentid"),
+                rs.getString("statecode"),
+                rs.getString("clientname"))));
         } catch (EmptyResultDataAccessException e) {
             student = Optional.empty();
         }

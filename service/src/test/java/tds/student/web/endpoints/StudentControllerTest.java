@@ -37,8 +37,7 @@ public class StudentControllerTest {
 
     @Test
     public void itShouldReturnStudentResourceById() {
-        Student student = new Student();
-        student.setId(1);
+        Student student = new Student(1, "testId", "CA", "clientName");
 
         when(studentService.findStudentById(1)).thenReturn(Optional.of(student));
         ResponseEntity<StudentResource> studentResponse = controller.findStudentById(1);
@@ -49,7 +48,7 @@ public class StudentControllerTest {
         assertThat(studentResponse.getBody().getStudent()).isEqualTo(student);
     }
 
-    @Test (expected = NotFoundException.class)
+    @Test(expected = NotFoundException.class)
     public void itShouldHandleStudentByIdNotFound() {
         when(studentService.findStudentById(1)).thenReturn(Optional.empty());
         controller.findStudentById(1);

@@ -28,7 +28,7 @@ public class StudentControllerIntegrationTests {
             .contentType(ContentType.JSON)
             .statusCode(200)
             .body("student.id", equalTo(1))
-            .body("student.studentId", equalTo("adv001"))
+            .body("student.externalStudentId", equalTo("adv001"))
             .body("student.stateCode", equalTo("CA"))
             .body("student.clientName", equalTo("SBAC_PT"));
     }

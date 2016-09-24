@@ -26,7 +26,7 @@ public class StudentRepositoryImplIntegrationTests {
         Student student = maybeStudent.get();
         assertThat(student.getId()).isEqualTo(1);
         assertThat(student.getClientName()).isEqualTo("SBAC_PT");
-        assertThat(student.getStudentId()).isEqualTo("adv001");
+        assertThat(student.getExternalStudentId()).isEqualTo("adv001");
         assertThat(student.getStateCode()).isEqualTo("CA");
     }
 

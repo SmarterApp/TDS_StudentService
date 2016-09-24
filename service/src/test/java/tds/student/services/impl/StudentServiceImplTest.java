@@ -31,8 +31,7 @@ public class StudentServiceImplTest {
 
     @Test
     public void itShouldReturnStudent() {
-        Student student = new Student();
-        student.setId(1);
+        Student student = new Student(1, "testId", "CA", "clientName");
         when(repository.findStudentById(1)).thenReturn(Optional.of(student));
 
         Optional<Student> optionalStudent = studentService.findStudentById(1);

@@ -4,10 +4,23 @@ package tds.student;
  * Represents a student taking an exam
  */
 public class Student {
-    private long id;
-    private String studentId;
-    private String stateCode;
-    private String clientName;
+    private final long id;
+    private final String externalStudentId;
+    private final String stateCode;
+    private final String clientName;
+
+    /**
+     * @param numeric           id for the student
+     * @param externalStudentId external SSID in the ART system
+     * @param stateCode         state code for the student
+     * @param clientName        client name associated with the student
+     */
+    public Student(long id, String externalStudentId, String stateCode, String clientName) {
+        this.id = id;
+        this.externalStudentId = externalStudentId;
+        this.stateCode = stateCode;
+        this.clientName = clientName;
+    }
 
     /**
      * @return numeric id for the student
@@ -17,24 +30,10 @@ public class Student {
     }
 
     /**
-     * @param id numeric id for the student
-     */
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    /**
      * @return the external SSID in the ART system
      */
-    public String getStudentId() {
-        return studentId;
-    }
-
-    /**
-     * @param studentId the external SSID in the ART system
-     */
-    public void setStudentId(String studentId) {
-        this.studentId = studentId;
+    public String getExternalStudentId() {
+        return externalStudentId;
     }
 
     /**
@@ -45,23 +44,9 @@ public class Student {
     }
 
     /**
-     * @param stateCode state code for the student
-     */
-    public void setStateCode(String stateCode) {
-        this.stateCode = stateCode;
-    }
-
-    /**
      * @return client name associated with the student
      */
     public String getClientName() {
         return clientName;
-    }
-
-    /**
-      * @param clientName client name associated with the student
-     */
-    public void setClientName(String clientName) {
-        this.clientName = clientName;
     }
 }
