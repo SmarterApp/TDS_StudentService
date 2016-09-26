@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.opentestsystem.student</groupId>
-    <artifactId>tds-student-service</artifactId>
-    <name>tds-student-service</name>
+    <artifactId>tds-student</artifactId>
+    <name>tds-student</name>
     <packaging>pom</packaging>
     <version>0.0.1-SNAPSHOT</version>
 
@@ -26,7 +26,7 @@
         <java.version>1.8</java.version>
         <maven.compiler.plugin.version>3.5.1</maven.compiler.plugin.version>
 
-        <tds-student-service-client.version>0.0.1-SNAPSHOT</tds-student-service-client.version>
+        <tds-student-client.version>0.0.1-SNAPSHOT</tds-student-client.version>
         <tds-common.version>0.0.1-SNAPSHOT</tds-common.version>
 
         <unit-tests.skip>false</unit-tests.skip>
