@@ -36,7 +36,7 @@ public class StudentControllerTest {
     }
 
     @Test
-    public void itShouldReturnStudentResourceById() {
+    public void shouldReturnStudentResourceById() {
         Student student = new Student(1, "testId", "CA", "clientName");
 
         when(studentService.findStudentById(1)).thenReturn(Optional.of(student));
@@ -49,7 +49,7 @@ public class StudentControllerTest {
     }
 
     @Test(expected = NotFoundException.class)
-    public void itShouldHandleStudentByIdNotFound() {
+    public void shouldHandleStudentByIdNotFound() {
         when(studentService.findStudentById(1)).thenReturn(Optional.empty());
         controller.findStudentById(1);
     }

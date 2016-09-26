@@ -30,7 +30,7 @@ public class StudentServiceImplTest {
     }
 
     @Test
-    public void itShouldReturnStudent() {
+    public void shouldReturnStudent() {
         Student student = new Student(1, "testId", "CA", "clientName");
         when(repository.findStudentById(1)).thenReturn(Optional.of(student));
 
