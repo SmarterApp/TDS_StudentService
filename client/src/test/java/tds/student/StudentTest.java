@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class StudentTest {
 
     @Test
-    public void itCanBeCreated() {
+    public void shouldBeCreated() {
         Student student = new Student(1, "test", "CA", "clientName");
 
         assertThat(student.getId()).isEqualTo(1);
