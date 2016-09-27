@@ -30,7 +30,9 @@ public class StudentControllerIntegrationTests {
             .body("student.id", equalTo(1))
             .body("student.externalStudentId", equalTo("adv001"))
             .body("student.stateCode", equalTo("CA"))
-            .body("student.clientName", equalTo("SBAC_PT"));
+            .body("student.clientName", equalTo("SBAC_PT"))
+            .body("_links.self.href", equalTo("http://localhost:8080/students/1"));
+
     }
 
     @Test
