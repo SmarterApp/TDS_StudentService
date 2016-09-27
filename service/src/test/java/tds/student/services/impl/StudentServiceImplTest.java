@@ -10,10 +10,10 @@ import tds.student.Student;
 import tds.student.repositories.StudentRepository;
 import tds.student.services.StudentService;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class StudentServiceImplTest {
     private StudentRepository repository;
@@ -30,14 +30,13 @@ public class StudentServiceImplTest {
     }
 
     @Test
-    public void itShouldReturnStudent() {
-        Student student = new Student();
-        student.setId(1);
-        when(repository.getStudentById(1)).thenReturn(Optional.of(student));
+    public void shouldReturnStudent() {
+        Student student = new Student(1, "testId", "CA", "clientName");
+        when(repository.findStudentById(1)).thenReturn(Optional.of(student));
 
-        Optional<Student> optionalStudent = studentService.getStudent(1);
+        Optional<Student> optionalStudent = studentService.findStudentById(1);
 
-        verify(repository).getStudentById(1);
+        verify(repository).findStudentById(1);
 
         assertThat(optionalStudent.isPresent()).isTrue();
         assertThat(optionalStudent.get().getId()).isEqualTo(1);

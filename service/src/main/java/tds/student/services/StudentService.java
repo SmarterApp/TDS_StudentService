@@ -13,5 +13,5 @@ public interface StudentService {
      * @param id student key
      * @return student if found otherwise empty optional
      */
-    Optional<Student> getStudent(long id);
+    Optional<Student> findStudentById(long id);
 }

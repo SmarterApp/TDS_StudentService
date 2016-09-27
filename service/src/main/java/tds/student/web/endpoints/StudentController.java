@@ -15,7 +15,7 @@ import tds.student.services.StudentService;
 import tds.student.web.resources.StudentResource;
 
 @RestController
-@RequestMapping("/student")
+@RequestMapping("/students")
 public class StudentController {
     private final StudentService studentService;
 
@@ -26,8 +26,8 @@ public class StudentController {
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<StudentResource> getStudentById(@PathVariable long id) {
-        final Student student = studentService.getStudent(id)
+    public ResponseEntity<StudentResource> findStudentById(@PathVariable long id) {
+        final Student student = studentService.findStudentById(id)
             .orElseThrow(() -> new NotFoundException("Could not find student with id %d", id));
 
         return ResponseEntity.ok(new StudentResource(student));
