@@ -28,7 +28,7 @@ public class StudentControllerIntegrationTests {
             .contentType(ContentType.JSON)
             .statusCode(200)
             .body("student.id", equalTo(1))
-            .body("student.loginStudentSSID", equalTo("adv001"))
+            .body("student.loginSSID", equalTo("adv001"))
             .body("student.stateCode", equalTo("CA"))
             .body("student.clientName", equalTo("SBAC_PT"))
             .body("_links.self.href", equalTo("http://localhost:8080/students/1"));
