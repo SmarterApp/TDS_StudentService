@@ -13,6 +13,6 @@ public class StudentTest {
         assertThat(student.getId()).isEqualTo(1);
         assertThat(student.getClientName()).isEqualTo("clientName");
         assertThat(student.getStateCode()).isEqualTo("CA");
-        assertThat(student.getExternalStudentId()).isEqualTo("test");
+        assertThat(student.getLoginStudentSSID()).isEqualTo("test");
     }
 }

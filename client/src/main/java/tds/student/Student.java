@@ -5,19 +5,19 @@ package tds.student;
  */
 public class Student {
     private final long id;
-    private final String externalStudentId;
+    private final String loginStudentSSID;
     private final String stateCode;
     private final String clientName;
 
     /**
      * @param numeric           id for the student
-     * @param externalStudentId external SSID in the ART system
+     * @param loginStudentSSID external SSID in the ART system
      * @param stateCode         state code for the student
      * @param clientName        client name associated with the student
      */
-    public Student(long id, String externalStudentId, String stateCode, String clientName) {
+    public Student(long id, String loginStudentSSID, String stateCode, String clientName) {
         this.id = id;
-        this.externalStudentId = externalStudentId;
+        this.loginStudentSSID = loginStudentSSID;
         this.stateCode = stateCode;
         this.clientName = clientName;
     }
@@ -32,8 +32,8 @@ public class Student {
     /**
      * @return the external SSID in the ART system
      */
-    public String getExternalStudentId() {
-        return externalStudentId;
+    public String getLoginStudentSSID() {
+        return loginStudentSSID;
     }
 
     /**
