@@ -14,7 +14,6 @@ import java.util.Optional;
 import tds.common.web.exceptions.NotFoundException;
 import tds.student.Student;
 import tds.student.services.StudentService;
-import tds.student.web.resources.StudentResource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -40,12 +39,11 @@ public class StudentControllerTest {
         Student student = new Student(1, "testId", "CA", "clientName");
 
         when(studentService.findStudentById(1)).thenReturn(Optional.of(student));
-        ResponseEntity<StudentResource> studentResponse = controller.findStudentById(1);
+        ResponseEntity<Student> studentResponse = controller.findStudentById(1);
         verify(studentService).findStudentById(1);
 
         assertThat(studentResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(studentResponse.getBody().getId().getHref()).isEqualTo("http://localhost/students/1");
-        assertThat(studentResponse.getBody().getStudent()).isEqualTo(student);
+        assertThat(studentResponse.getBody()).isEqualTo(student);
     }
 
     @Test(expected = NotFoundException.class)

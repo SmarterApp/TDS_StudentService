@@ -5,18 +5,6 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.opentestsystem.student</groupId>
     <artifactId>tds-student-service</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
-
-    <name>tds-student-service</name>
-    <description>The microservice for students</description>
-
-    <parent>
-        <groupId>org.opentestsystem.student</groupId>
-        <artifactId>tds-student</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
-    </parent>
-
     <dependencies>
         <dependency>
             <groupId>org.opentestsystem.student</groupId>
@@ -62,12 +50,6 @@
             <artifactId>spring-context-support</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-
         <!-- Database/data access dependencies -->
         <dependency>
             <groupId>mysql</groupId>
@@ -82,7 +64,20 @@
             <version>2.3.9</version>
         </dependency>
 
+        <!-- JSON -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>2.6.1</version>
+        </dependency>
+
         <!-- Unit testing dependencies -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
@@ -130,6 +125,18 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <packaging>jar</packaging>
+    <name>tds-student-service</name>
+
+    <description>The microservice for students</description>
+
+    <parent>
+        <groupId>org.opentestsystem.student</groupId>
+        <artifactId>tds-student</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
 
     <build>
         <plugins>
