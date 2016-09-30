@@ -27,11 +27,10 @@ public class StudentControllerIntegrationTests {
         .then()
             .contentType(ContentType.JSON)
             .statusCode(200)
-            .body("student.id", equalTo(1))
-            .body("student.loginSSID", equalTo("adv001"))
-            .body("student.stateCode", equalTo("CA"))
-            .body("student.clientName", equalTo("SBAC_PT"))
-            .body("_links.self.href", equalTo("http://localhost:8080/students/1"));
+            .body("id", equalTo(1))
+            .body("loginSSID", equalTo("adv001"))
+            .body("stateCode", equalTo("CA"))
+            .body("clientName", equalTo("SBAC_PT"));
 
     }
 

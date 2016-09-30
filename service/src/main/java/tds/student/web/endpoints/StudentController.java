@@ -12,11 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 import tds.common.web.exceptions.NotFoundException;
 import tds.student.Student;
 import tds.student.services.StudentService;
-import tds.student.web.resources.StudentResource;
 
 @RestController
 @RequestMapping("/students")
-public class StudentController {
+class StudentController {
     private final StudentService studentService;
 
     @Autowired
@@ -26,10 +25,10 @@ public class StudentController {
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<StudentResource> findStudentById(@PathVariable long id) {
+    ResponseEntity<Student> findStudentById(@PathVariable long id) {
         final Student student = studentService.findStudentById(id)
             .orElseThrow(() -> new NotFoundException("Could not find student with id %d", id));
 
-        return ResponseEntity.ok(new StudentResource(student));
+        return ResponseEntity.ok(student);
     }
 }
