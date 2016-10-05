@@ -2,6 +2,9 @@ package tds.student.web.endpoints;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -12,17 +15,24 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 import tds.common.web.exceptions.NotFoundException;
+import tds.student.RtsAttribute;
 import tds.student.Student;
+import tds.student.services.RtsService;
 import tds.student.services.StudentService;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@RunWith(MockitoJUnitRunner.class)
 public class StudentControllerTest {
-    private StudentService studentService;
     private StudentController controller;
+
+    @Mock
+    private StudentService studentService;
+
+    @Mock
+    private RtsService rtsService;
 
     @Before
     public void setUp() {
@@ -30,8 +40,7 @@ public class StudentControllerTest {
         ServletRequestAttributes requestAttributes = new ServletRequestAttributes(request);
         RequestContextHolder.setRequestAttributes(requestAttributes);
 
-        studentService = mock(StudentService.class);
-        controller = new StudentController(studentService);
+        controller = new StudentController(studentService, rtsService);
     }
 
     @Test
@@ -50,5 +59,23 @@ public class StudentControllerTest {
     public void shouldHandleStudentByIdNotFound() {
         when(studentService.findStudentById(1)).thenReturn(Optional.empty());
         controller.findStudentById(1);
+    }
+
+    @Test
+    public void shouldReturnRtsAttribute() {
+        RtsAttribute attribute = new RtsAttribute("name", "value");
+
+        when(rtsService.findRtsStudentPackage("client", 1, "name")).thenReturn(Optional.of(attribute));
+        ResponseEntity<RtsAttribute> response = controller.findRtsAttribute(1, "client", "name");
+        verify(rtsService).findRtsStudentPackage("client", 1, "name");
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).isEqualTo(attribute);
+    }
+
+    @Test (expected = NotFoundException.class)
+    public void shouldHandleRtsAttributeNotFound() {
+        when(rtsService.findRtsStudentPackage("client", 1, "name")).thenReturn(Optional.empty());
+        controller.findRtsAttribute(1, "client", "name");
     }
 }

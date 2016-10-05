@@ -13,7 +13,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.net.URI;
 import java.util.Optional;
 
+import tds.student.RtsAttribute;
 import tds.student.Student;
+import tds.student.services.RtsService;
 import tds.student.services.StudentService;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -32,6 +34,9 @@ public class StudentControllerIntegrationTests {
     @MockBean
     private StudentService studentService;
 
+    @MockBean
+    private RtsService rtsService;
+
     @Test
     public void shouldReturnStudent() throws Exception {
         Student student = new Student(1, "studentId", "CA", "client");
@@ -49,12 +54,33 @@ public class StudentControllerIntegrationTests {
     }
 
     @Test
-    public void shouldReturnNotFound() throws Exception {
+    public void shouldReturnNotFoundWhenStudentNotFound() throws Exception {
         when(studentService.findStudentById(1)).thenReturn(Optional.empty());
         http.perform(get(new URI("/students/1"))
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound());
 
         verify(studentService).findStudentById(1);
+    }
+
+    @Test
+    public void shouldReturnRtsAttributeForStudent() throws Exception {
+        when(rtsService.findRtsStudentPackage("client", 1, "testName")).thenReturn(Optional.of(new RtsAttribute("testName", "testValue")));
+
+        http.perform(get(new URI("/students/1/rts/client/testName"))
+            .contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("name", is("testName")))
+            .andExpect(jsonPath("value", is("testValue")));
+    }
+
+    @Test
+    public void shouldReturnNotFoundWhenAttributeNotFound() throws Exception {
+        when(rtsService.findRtsStudentPackage("client", 1, "name")).thenReturn(Optional.empty());
+        http.perform(get(new URI("/students/1/rts/client/name"))
+            .contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNotFound());
+
+        verify(rtsService).findRtsStudentPackage("client", 1, "name");
     }
 }
