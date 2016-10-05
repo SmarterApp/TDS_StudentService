@@ -10,6 +10,8 @@ package tds.student.legacy.rtspackage;
 
 import java.io.InputStream;
 
+import tds.student.legacy.rtspackage.common.exception.RtsPackageWriterException;
+
 /**
  * Writes package as serialized object
  *

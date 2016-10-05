@@ -22,6 +22,10 @@ import java.io.ObjectOutputStream;
 import java.io.StringReader;
 import java.util.zip.GZIPOutputStream;
 
+import tds.student.legacy.rtspackage.IRtsPackageWriter;
+import tds.student.legacy.rtspackage.common.exception.RtsPackageWriterException;
+import tds.student.legacy.rtspackage.student.data.StudentPackage;
+
 
 /**
  * @author jmambo
