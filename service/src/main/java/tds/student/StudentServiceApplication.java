@@ -4,8 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import tds.student.legacy.rtspackage.IRtsPackageReader;
-import tds.student.legacy.rtspackage.student.StudentPackageReader;
+import tds.dll.common.rtspackage.IRtsPackageReader;
+import tds.dll.common.rtspackage.student.StudentPackageReader;
 
 @SpringBootApplication
 public class StudentServiceApplication {

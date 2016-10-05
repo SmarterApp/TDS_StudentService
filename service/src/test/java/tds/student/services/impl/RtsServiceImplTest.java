@@ -8,9 +8,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Optional;
 
+import tds.dll.common.rtspackage.IRtsPackageReader;
+import tds.dll.common.rtspackage.common.exception.RtsPackageReaderException;
 import tds.student.RtsAttribute;
-import tds.student.legacy.rtspackage.IRtsPackageReader;
-import tds.student.legacy.rtspackage.common.exception.RtsPackageReaderException;
 import tds.student.repositories.RtsStudentPackageQueryRepository;
 import tds.student.services.RtsService;
 
