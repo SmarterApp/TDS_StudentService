@@ -25,20 +25,20 @@ public class RtsServiceImpl implements RtsService {
     @Override
     public Optional<RtsStudentPackageAttribute> findRtsStudentPackageAttribute(String clientName, long studentId, String attributeName) {
         Optional<byte[]> maybePackage = rtsStudentPackageQueryRepository.findRtsStudentPackage(clientName, studentId);
+        if (!maybePackage.isPresent()) {
+            return Optional.empty();
+        }
 
         Optional<RtsStudentPackageAttribute> maybeAttribute = Optional.empty();
-
-        if (maybePackage.isPresent()) {
-            try {
-                if (packageReader.read(maybePackage.get())) {
-                    String value = packageReader.getFieldValue(attributeName);
-                    if(value != null) {
-                        maybeAttribute = Optional.of(new RtsStudentPackageAttribute(attributeName, value));
-                    }
+        try {
+            if (packageReader.read(maybePackage.get())) {
+                String value = packageReader.getFieldValue(attributeName);
+                if (value != null) {
+                    maybeAttribute = Optional.of(new RtsStudentPackageAttribute(attributeName, value));
                 }
-            } catch (RtsPackageReaderException e) {
-                throw new RuntimeException(e);
             }
+        } catch (RtsPackageReaderException e) {
+            throw new RuntimeException(e);
         }
 
         return maybeAttribute;
