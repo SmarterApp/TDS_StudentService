@@ -65,7 +65,7 @@ public class StudentControllerIntegrationTests {
 
     @Test
     public void shouldReturnRtsAttributeForStudent() throws Exception {
-        when(rtsService.findRtsStudentPackage("client", 1, "testName")).thenReturn(Optional.of(new RtsAttribute("testName", "testValue")));
+        when(rtsService.findRtsStudentPackageAttribute("client", 1, "testName")).thenReturn(Optional.of(new RtsAttribute("testName", "testValue")));
 
         http.perform(get(new URI("/students/1/rts/client/testName"))
             .contentType(MediaType.APPLICATION_JSON))
@@ -76,11 +76,11 @@ public class StudentControllerIntegrationTests {
 
     @Test
     public void shouldReturnNotFoundWhenAttributeNotFound() throws Exception {
-        when(rtsService.findRtsStudentPackage("client", 1, "name")).thenReturn(Optional.empty());
+        when(rtsService.findRtsStudentPackageAttribute("client", 1, "name")).thenReturn(Optional.empty());
         http.perform(get(new URI("/students/1/rts/client/name"))
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound());
 
-        verify(rtsService).findRtsStudentPackage("client", 1, "name");
+        verify(rtsService).findRtsStudentPackageAttribute("client", 1, "name");
     }
 }

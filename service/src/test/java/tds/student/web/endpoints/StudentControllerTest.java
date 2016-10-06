@@ -65,9 +65,9 @@ public class StudentControllerTest {
     public void shouldReturnRtsAttribute() {
         RtsAttribute attribute = new RtsAttribute("name", "value");
 
-        when(rtsService.findRtsStudentPackage("client", 1, "name")).thenReturn(Optional.of(attribute));
-        ResponseEntity<RtsAttribute> response = controller.findRtsAttribute(1, "client", "name");
-        verify(rtsService).findRtsStudentPackage("client", 1, "name");
+        when(rtsService.findRtsStudentPackageAttribute("client", 1, "name")).thenReturn(Optional.of(attribute));
+        ResponseEntity<RtsAttribute> response = controller.findRtsStudentPackageAttribute(1, "client", "name");
+        verify(rtsService).findRtsStudentPackageAttribute("client", 1, "name");
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isEqualTo(attribute);
@@ -75,7 +75,7 @@ public class StudentControllerTest {
 
     @Test (expected = NotFoundException.class)
     public void shouldHandleRtsAttributeNotFound() {
-        when(rtsService.findRtsStudentPackage("client", 1, "name")).thenReturn(Optional.empty());
-        controller.findRtsAttribute(1, "client", "name");
+        when(rtsService.findRtsStudentPackageAttribute("client", 1, "name")).thenReturn(Optional.empty());
+        controller.findRtsStudentPackageAttribute(1, "client", "name");
     }
 }

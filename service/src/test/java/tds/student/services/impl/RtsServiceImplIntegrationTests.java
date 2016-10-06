@@ -38,21 +38,46 @@ public class RtsServiceImplIntegrationTests {
     @Autowired
     private RtsService rtsService;
 
-    @Before
-    public void setUp() {
-        jdbcTemplate = new JdbcTemplate(dataSource);
-    }
+    private byte[] studentPackageBytes;
 
-    @Test
-    public void shouldReadPackage() throws IOException, RtsPackageWriterException {
+    @Before
+    public void setUp() throws Exception {
+        jdbcTemplate = new JdbcTemplate(dataSource);
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream("studentPackage.xml");
         String studentPackage = IOUtils.toString(inputStream);
 
         StudentPackageWriter writer = new StudentPackageWriter();
         writer.writeObject(studentPackage);
-        byte[] studentPackageBytes = IOUtils.toByteArray(writer.getInputStream());
+        studentPackageBytes = IOUtils.toByteArray(writer.getInputStream());
+    }
 
+    @Test
+    public void shouldReadPackage() throws IOException, RtsPackageWriterException {
+        insertData();
 
+        Optional<RtsAttribute> maybeRtsAttribute = rtsService.findRtsStudentPackageAttribute("SBAC_PT", 1, "LglFNm");
+
+        assertThat(maybeRtsAttribute).isPresent();
+        assertThat(maybeRtsAttribute.get().getName()).isEqualTo("LglFNm");
+        assertThat(maybeRtsAttribute.get().getValue()).isEqualTo("ASL");
+    }
+
+    @Test
+    public void shouldReturnEmptyOptionalWhenPackageNotFound() {
+        Optional<RtsAttribute> maybeRtsAttribute = rtsService.findRtsStudentPackageAttribute("SBAC_PT", 1, "NameOfInstitution");
+        assertThat(maybeRtsAttribute).isNotPresent();
+    }
+
+    @Test
+    public void shouldReturnEmptyWhenAttributeCannotBeFound() throws IOException, RtsPackageWriterException {
+        insertData();
+
+        Optional<RtsAttribute> maybeRtsAttribute = rtsService.findRtsStudentPackageAttribute("SBAC_PT", 1, "Bogus");
+
+        assertThat(maybeRtsAttribute).isNotPresent();
+    }
+
+    private void insertData() {
         String SQL = "insert into r_studentpackage (_key, studentkey, clientname, package, version, datecreated) \n" +
             "values (?, ?, ?, ?, ?, NOW());";
 
@@ -68,17 +93,5 @@ public class RtsServiceImplIntegrationTests {
                 }
             }
         );
-
-        Optional<RtsAttribute> maybeRtsAttribute = rtsService.findRtsStudentPackage("SBAC_PT", 1, "FirstName");
-
-        assertThat(maybeRtsAttribute).isPresent();
-        assertThat(maybeRtsAttribute.get().getName()).isEqualTo("FirstName");
-        assertThat(maybeRtsAttribute.get().getValue()).isEqualTo("ASL");
-    }
-
-    @Test
-    public void shouldReturnEmptyOptionalWhenPackageNotFound() {
-        Optional<RtsAttribute> maybeRtsAttribute = rtsService.findRtsStudentPackage("SBAC_PT", 1, "NameOfInstitution");
-        assertThat(maybeRtsAttribute).isNotPresent();
     }
 }

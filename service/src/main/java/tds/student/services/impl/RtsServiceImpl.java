@@ -23,7 +23,7 @@ public class RtsServiceImpl implements RtsService {
     }
 
     @Override
-    public Optional<RtsAttribute> findRtsStudentPackage(String clientName, long studentId, String attributeName) {
+    public Optional<RtsAttribute> findRtsStudentPackageAttribute(String clientName, long studentId, String attributeName) {
         Optional<byte[]> maybePackage = rtsStudentPackageQueryRepository.findRtsStudentPackage(clientName, studentId);
 
         Optional<RtsAttribute> maybeAttribute = Optional.empty();
@@ -32,7 +32,9 @@ public class RtsServiceImpl implements RtsService {
             try {
                 if (packageReader.read(maybePackage.get())) {
                     String value = packageReader.getFieldValue(attributeName);
-                    maybeAttribute = Optional.of(new RtsAttribute(attributeName, value));
+                    if(value != null) {
+                        maybeAttribute = Optional.of(new RtsAttribute(attributeName, value));
+                    }
                 }
             } catch (RtsPackageReaderException e) {
                 throw new RuntimeException(e);

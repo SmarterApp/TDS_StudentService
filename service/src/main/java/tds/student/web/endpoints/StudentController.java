@@ -39,10 +39,10 @@ class StudentController {
 
     @RequestMapping(value = "{id}/rts/{clientName}/{attributeName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    ResponseEntity<RtsAttribute> findRtsAttribute(@PathVariable long id,
-                                                  @PathVariable String clientName,
-                                                  @PathVariable String attributeName) {
-        final RtsAttribute rtsAttribute = rtsService.findRtsStudentPackage(clientName, id, attributeName)
+    ResponseEntity<RtsAttribute> findRtsStudentPackageAttribute(@PathVariable long id,
+                                                                @PathVariable String clientName,
+                                                                @PathVariable String attributeName) {
+        final RtsAttribute rtsAttribute = rtsService.findRtsStudentPackageAttribute(clientName, id, attributeName)
             .orElseThrow(() -> new NotFoundException("Could not find attribute for client %s and student %d", clientName, id));
 
         return ResponseEntity.ok(rtsAttribute);

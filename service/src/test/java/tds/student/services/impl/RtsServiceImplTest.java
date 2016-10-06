@@ -37,7 +37,7 @@ public class RtsServiceImplTest {
     public void shouldReturnEmptyIfPackageCannotBeFound() {
         when(rtsRepository.findRtsStudentPackage("client", 1)).thenReturn(Optional.empty());
 
-        assertThat(rtsService.findRtsStudentPackage("client", 1, "attribute")).isNotPresent();
+        assertThat(rtsService.findRtsStudentPackageAttribute("client", 1, "attribute")).isNotPresent();
     }
 
     @Test
@@ -46,17 +46,17 @@ public class RtsServiceImplTest {
         when(rtsRepository.findRtsStudentPackage("client", 1)).thenReturn(Optional.of(blob));
         when(packageReader.read(blob)).thenReturn(false);
 
-        assertThat(rtsService.findRtsStudentPackage("client", 1, "attribute")).isNotPresent();
+        assertThat(rtsService.findRtsStudentPackageAttribute("client", 1, "attribute")).isNotPresent();
 
         verify(packageReader).read(blob);
     }
 
-    @Test (expected = RuntimeException.class)
+    @Test(expected = RuntimeException.class)
     public void shouldThrowWhenThereIsExceptionReadingPackage() throws Exception {
-        Optional<byte[]> maybeBlob= Optional.of(new byte[]{});
+        Optional<byte[]> maybeBlob = Optional.of(new byte[]{});
         when(rtsRepository.findRtsStudentPackage("client", 1)).thenReturn(maybeBlob);
         when(packageReader.read(maybeBlob.get())).thenThrow(new RtsPackageReaderException("Fail"));
-        rtsService.findRtsStudentPackage("client", 1, "attribute");
+        rtsService.findRtsStudentPackageAttribute("client", 1, "attribute");
     }
 
     @Test
@@ -66,9 +66,19 @@ public class RtsServiceImplTest {
         when(packageReader.read(blob)).thenReturn(true);
         when(packageReader.getFieldValue("attribute")).thenReturn("value");
 
-        Optional<RtsAttribute> maybeAttribute = rtsService.findRtsStudentPackage("client", 1, "attribute");
+        Optional<RtsAttribute> maybeAttribute = rtsService.findRtsStudentPackageAttribute("client", 1, "attribute");
         assertThat(maybeAttribute).isPresent();
         assertThat(maybeAttribute.get().getName()).isEqualTo("attribute");
         assertThat(maybeAttribute.get().getValue()).isEqualTo("value");
+    }
+
+    @Test
+    public void shouldReturnEmptyIfAttributeCouldNotBeFoundInPackage() throws Exception {
+        byte[] blob = new byte[]{};
+        when(rtsRepository.findRtsStudentPackage("client", 1)).thenReturn(Optional.of(blob));
+        when(packageReader.read(blob)).thenReturn(true);
+
+        Optional<RtsAttribute> maybeAttribute = rtsService.findRtsStudentPackageAttribute("client", 1, "attribute");
+        assertThat(maybeAttribute).isNotPresent();
     }
 }
