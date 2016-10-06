@@ -23,12 +23,53 @@
             <version>0.0.1-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
-                    <groupId>org.mongodb</groupId>
-                    <artifactId>mongo-java-driver</artifactId>
-                </exclusion>
-                <exclusion>
                     <groupId>org.springframework.security</groupId>
                     <artifactId>spring-security-core</artifactId>
+                </exclusion>
+                <!--New TDS Exclusions-->
+                <exclusion>
+                    <groupId>org.opentestsystem.delivery</groupId>
+                    <artifactId>tds-dll-master</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.opentestsystem.shared</groupId>
+                    <artifactId>shared-db</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.opentestsystem.shared</groupId>
+                    <artifactId>shared-master</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.opentestsystem.shared</groupId>
+                    <artifactId>shared-common</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.opentestsystem.shared</groupId>
+                    <artifactId>shared-config</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.opentestsystem.shared</groupId>
+                    <artifactId>shared-logging</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.opentestsystem.shared</groupId>
+                    <artifactId>shared-web</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.opentestsystem.shared</groupId>
+                    <artifactId>shared-xml</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.opentestsystem.shared</groupId>
+                    <artifactId>prog-mgmnt-client</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.opentestsystem.shared</groupId>
+                    <artifactId>sb11-shared-code</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.opentestsystem.shared</groupId>
+                    <artifactId>prog-mgmnt-client-null-impl</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
