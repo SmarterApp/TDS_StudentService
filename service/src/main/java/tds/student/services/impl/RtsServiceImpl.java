@@ -7,7 +7,7 @@ import java.util.Optional;
 
 import tds.dll.common.rtspackage.IRtsPackageReader;
 import tds.dll.common.rtspackage.common.exception.RtsPackageReaderException;
-import tds.student.RtsAttribute;
+import tds.student.RtsStudentPackageAttribute;
 import tds.student.repositories.RtsStudentPackageQueryRepository;
 import tds.student.services.RtsService;
 
@@ -23,17 +23,17 @@ public class RtsServiceImpl implements RtsService {
     }
 
     @Override
-    public Optional<RtsAttribute> findRtsStudentPackageAttribute(String clientName, long studentId, String attributeName) {
+    public Optional<RtsStudentPackageAttribute> findRtsStudentPackageAttribute(String clientName, long studentId, String attributeName) {
         Optional<byte[]> maybePackage = rtsStudentPackageQueryRepository.findRtsStudentPackage(clientName, studentId);
 
-        Optional<RtsAttribute> maybeAttribute = Optional.empty();
+        Optional<RtsStudentPackageAttribute> maybeAttribute = Optional.empty();
 
         if (maybePackage.isPresent()) {
             try {
                 if (packageReader.read(maybePackage.get())) {
                     String value = packageReader.getFieldValue(attributeName);
                     if(value != null) {
-                        maybeAttribute = Optional.of(new RtsAttribute(attributeName, value));
+                        maybeAttribute = Optional.of(new RtsStudentPackageAttribute(attributeName, value));
                     }
                 }
             } catch (RtsPackageReaderException e) {

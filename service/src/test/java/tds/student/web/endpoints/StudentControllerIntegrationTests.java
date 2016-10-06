@@ -13,7 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.net.URI;
 import java.util.Optional;
 
-import tds.student.RtsAttribute;
+import tds.student.RtsStudentPackageAttribute;
 import tds.student.Student;
 import tds.student.services.RtsService;
 import tds.student.services.StudentService;
@@ -65,7 +65,7 @@ public class StudentControllerIntegrationTests {
 
     @Test
     public void shouldReturnRtsAttributeForStudent() throws Exception {
-        when(rtsService.findRtsStudentPackageAttribute("client", 1, "testName")).thenReturn(Optional.of(new RtsAttribute("testName", "testValue")));
+        when(rtsService.findRtsStudentPackageAttribute("client", 1, "testName")).thenReturn(Optional.of(new RtsStudentPackageAttribute("testName", "testValue")));
 
         http.perform(get(new URI("/students/1/rts/client/testName"))
             .contentType(MediaType.APPLICATION_JSON))

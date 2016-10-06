@@ -1,6 +1,9 @@
 package tds.student;
 
-public class RtsAttribute {
+/**
+ * Represents an attribute in the rts student package
+ */
+public class RtsStudentPackageAttribute {
     private String value;
     private String name;
 
@@ -8,7 +11,7 @@ public class RtsAttribute {
      * @param name  name of the attribute
      * @param value value for the attribute
      */
-    public RtsAttribute(String name, String value) {
+    public RtsStudentPackageAttribute(String name, String value) {
         this.value = value;
         this.name = name;
     }
@@ -16,7 +19,7 @@ public class RtsAttribute {
     /**
      * For frameworks
      */
-    private RtsAttribute() {
+    private RtsStudentPackageAttribute() {
     }
 
     /**

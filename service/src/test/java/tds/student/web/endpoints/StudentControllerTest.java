@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 import tds.common.web.exceptions.NotFoundException;
-import tds.student.RtsAttribute;
+import tds.student.RtsStudentPackageAttribute;
 import tds.student.Student;
 import tds.student.services.RtsService;
 import tds.student.services.StudentService;
@@ -63,10 +63,10 @@ public class StudentControllerTest {
 
     @Test
     public void shouldReturnRtsAttribute() {
-        RtsAttribute attribute = new RtsAttribute("name", "value");
+        RtsStudentPackageAttribute attribute = new RtsStudentPackageAttribute("name", "value");
 
         when(rtsService.findRtsStudentPackageAttribute("client", 1, "name")).thenReturn(Optional.of(attribute));
-        ResponseEntity<RtsAttribute> response = controller.findRtsStudentPackageAttribute(1, "client", "name");
+        ResponseEntity<RtsStudentPackageAttribute> response = controller.findRtsStudentPackageAttribute(1, "client", "name");
         verify(rtsService).findRtsStudentPackageAttribute("client", 1, "name");
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);

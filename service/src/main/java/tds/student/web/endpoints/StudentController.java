@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import tds.common.web.exceptions.NotFoundException;
-import tds.student.RtsAttribute;
+import tds.student.RtsStudentPackageAttribute;
 import tds.student.Student;
 import tds.student.services.RtsService;
 import tds.student.services.StudentService;
@@ -39,12 +39,12 @@ class StudentController {
 
     @RequestMapping(value = "{id}/rts/{clientName}/{attributeName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    ResponseEntity<RtsAttribute> findRtsStudentPackageAttribute(@PathVariable long id,
-                                                                @PathVariable String clientName,
-                                                                @PathVariable String attributeName) {
-        final RtsAttribute rtsAttribute = rtsService.findRtsStudentPackageAttribute(clientName, id, attributeName)
+    ResponseEntity<RtsStudentPackageAttribute> findRtsStudentPackageAttribute(@PathVariable long id,
+                                                                              @PathVariable String clientName,
+                                                                              @PathVariable String attributeName) {
+        final RtsStudentPackageAttribute rtsStudentPackageAttribute = rtsService.findRtsStudentPackageAttribute(clientName, id, attributeName)
             .orElseThrow(() -> new NotFoundException("Could not find attribute for client %s and student %d", clientName, id));
 
-        return ResponseEntity.ok(rtsAttribute);
+        return ResponseEntity.ok(rtsStudentPackageAttribute);
     }
 }

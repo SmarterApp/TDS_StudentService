@@ -22,7 +22,7 @@ import java.util.Optional;
 
 import tds.dll.common.rtspackage.common.exception.RtsPackageWriterException;
 import tds.dll.common.rtspackage.student.StudentPackageWriter;
-import tds.student.RtsAttribute;
+import tds.student.RtsStudentPackageAttribute;
 import tds.student.services.RtsService;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -55,7 +55,7 @@ public class RtsServiceImplIntegrationTests {
     public void shouldReadPackage() throws IOException, RtsPackageWriterException {
         insertData();
 
-        Optional<RtsAttribute> maybeRtsAttribute = rtsService.findRtsStudentPackageAttribute("SBAC_PT", 1, "LglFNm");
+        Optional<RtsStudentPackageAttribute> maybeRtsAttribute = rtsService.findRtsStudentPackageAttribute("SBAC_PT", 1, "LglFNm");
 
         assertThat(maybeRtsAttribute).isPresent();
         assertThat(maybeRtsAttribute.get().getName()).isEqualTo("LglFNm");
@@ -64,7 +64,7 @@ public class RtsServiceImplIntegrationTests {
 
     @Test
     public void shouldReturnEmptyOptionalWhenPackageNotFound() {
-        Optional<RtsAttribute> maybeRtsAttribute = rtsService.findRtsStudentPackageAttribute("SBAC_PT", 1, "NameOfInstitution");
+        Optional<RtsStudentPackageAttribute> maybeRtsAttribute = rtsService.findRtsStudentPackageAttribute("SBAC_PT", 1, "NameOfInstitution");
         assertThat(maybeRtsAttribute).isNotPresent();
     }
 
@@ -72,7 +72,7 @@ public class RtsServiceImplIntegrationTests {
     public void shouldReturnEmptyWhenAttributeCannotBeFound() throws IOException, RtsPackageWriterException {
         insertData();
 
-        Optional<RtsAttribute> maybeRtsAttribute = rtsService.findRtsStudentPackageAttribute("SBAC_PT", 1, "Bogus");
+        Optional<RtsStudentPackageAttribute> maybeRtsAttribute = rtsService.findRtsStudentPackageAttribute("SBAC_PT", 1, "Bogus");
 
         assertThat(maybeRtsAttribute).isNotPresent();
     }

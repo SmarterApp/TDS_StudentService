@@ -10,7 +10,7 @@ import java.util.Optional;
 
 import tds.dll.common.rtspackage.IRtsPackageReader;
 import tds.dll.common.rtspackage.common.exception.RtsPackageReaderException;
-import tds.student.RtsAttribute;
+import tds.student.RtsStudentPackageAttribute;
 import tds.student.repositories.RtsStudentPackageQueryRepository;
 import tds.student.services.RtsService;
 
@@ -66,7 +66,7 @@ public class RtsServiceImplTest {
         when(packageReader.read(blob)).thenReturn(true);
         when(packageReader.getFieldValue("attribute")).thenReturn("value");
 
-        Optional<RtsAttribute> maybeAttribute = rtsService.findRtsStudentPackageAttribute("client", 1, "attribute");
+        Optional<RtsStudentPackageAttribute> maybeAttribute = rtsService.findRtsStudentPackageAttribute("client", 1, "attribute");
         assertThat(maybeAttribute).isPresent();
         assertThat(maybeAttribute.get().getName()).isEqualTo("attribute");
         assertThat(maybeAttribute.get().getValue()).isEqualTo("value");
@@ -78,7 +78,7 @@ public class RtsServiceImplTest {
         when(rtsRepository.findRtsStudentPackage("client", 1)).thenReturn(Optional.of(blob));
         when(packageReader.read(blob)).thenReturn(true);
 
-        Optional<RtsAttribute> maybeAttribute = rtsService.findRtsStudentPackageAttribute("client", 1, "attribute");
+        Optional<RtsStudentPackageAttribute> maybeAttribute = rtsService.findRtsStudentPackageAttribute("client", 1, "attribute");
         assertThat(maybeAttribute).isNotPresent();
     }
 }

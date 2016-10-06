@@ -2,7 +2,7 @@ package tds.student.services;
 
 import java.util.Optional;
 
-import tds.student.RtsAttribute;
+import tds.student.RtsStudentPackageAttribute;
 
 /**
  * Handles interactions with session rts packages
@@ -14,7 +14,7 @@ public interface RtsService {
      * @param clientName    the client name
      * @param studentId     the student id associated with the package
      * @param attributeName the attribute name to be used for lookup within the package
-     * @return the {@link tds.student.RtsAttribute} otherwise empty
+     * @return the {@link tds.student.RtsStudentPackageAttribute} otherwise empty
      */
-    Optional<RtsAttribute> findRtsStudentPackageAttribute(String clientName, long studentId, String attributeName);
+    Optional<RtsStudentPackageAttribute> findRtsStudentPackageAttribute(String clientName, long studentId, String attributeName);
 }
