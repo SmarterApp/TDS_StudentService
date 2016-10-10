@@ -43,12 +43,13 @@ public class RtsServiceImplIntegrationTests {
     @Before
     public void setUp() throws Exception {
         jdbcTemplate = new JdbcTemplate(dataSource);
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("studentPackage.xml");
-        String studentPackage = IOUtils.toString(inputStream);
 
-        StudentPackageWriter writer = new StudentPackageWriter();
-        writer.writeObject(studentPackage);
-        studentPackageBytes = IOUtils.toByteArray(writer.getInputStream());
+        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("studentPackage.xml")) {
+            String studentPackage = IOUtils.toString(inputStream);
+            StudentPackageWriter writer = new StudentPackageWriter();
+            writer.writeObject(studentPackage);
+            studentPackageBytes = IOUtils.toByteArray(writer.getInputStream());
+        }
     }
 
     @Test
