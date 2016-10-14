@@ -1,0 +1,35 @@
+#-----------------------------------------------------------------------------------------------------------------------
+# File:  docker-compose.yml
+#
+# Desc:  Create a Docker container that hosts the Student Support Service listening on 23572.
+#
+# Usage Notes
+# ===========
+# This docker-compose file expects the following:
+#
+#   * The fwsbac/tds-student-service image is already built.  Typically, the fwsbac/tds-config-service image is built
+#     as part of the Maven build process.  The following command is used to build the .jars and the associated Docker
+#     image:
+#
+#       mvn clean package docker:build -f /path/to/service/pom.xml
+#
+#   * An enivronment file named student-service.env exists in the same directory as this docker-compose file.  The
+#     following environment variables should be configured:
+#
+#       STUDENT_DB_HOST=IP address or FQDN of the MySQL database server that hosts the TDS student/session database
+#       STUDENT_DB_PORT=The port on which the MySQL database server listens
+#       STUDENT_DB_NAME=The name of the TDS student/session database (typically "session")
+#       STUDENT_DB_USER=The MySQL user account with sufficient privileges to read from the student/session database
+#       STUDENT_DB_PASSWORD=The password for the MySQL user account
+#
+#     Due to the sensitive content contained within the student-service.env file, it is not (and should not be) checked
+#     into source control.
+#
+#-----------------------------------------------------------------------------------------------------------------------
+version: '2'
+services:
+  session:
+    image: fwsbac/tds-student-service
+    ports:
+      - "32842:8080"
+    env_file: student-service.env
