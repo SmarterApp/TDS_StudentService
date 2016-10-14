@@ -29,7 +29,7 @@
 version: '2'
 services:
   session:
-    image: fwsbac/tds-session-service
+    image: fwsbac/tds-student-service
     ports:
       - "32842:8080"
     env_file: student-service.env
