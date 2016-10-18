@@ -1,46 +1,86 @@
 package tds.student.web.endpoints;
 
-import com.jayway.restassured.http.ContentType;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
 
-import tds.student.StudentServiceApplication;
+import java.net.URI;
+import java.util.Optional;
 
-import static com.jayway.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
+import tds.student.RtsStudentPackageAttribute;
+import tds.student.Student;
+import tds.student.services.RtsService;
+import tds.student.services.StudentService;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = StudentServiceApplication.class)
-@WebAppConfiguration
-@IntegrationTest("server.port:8080")
+import static org.hamcrest.CoreMatchers.is;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@RunWith(SpringRunner.class)
+@WebMvcTest(StudentController.class)
 public class StudentControllerIntegrationTests {
-    @Test
-    public void shouldReturnStudent() {
-        given()
-            .accept(ContentType.JSON)
-        .when()
-            .get(String.format("/students/%d", 1))
-        .then()
-            .contentType(ContentType.JSON)
-            .statusCode(200)
-            .body("id", equalTo(1))
-            .body("loginSSID", equalTo("adv001"))
-            .body("stateCode", equalTo("CA"))
-            .body("clientName", equalTo("SBAC_PT"));
+    @Autowired
+    private MockMvc http;
 
+    @MockBean
+    private StudentService studentService;
+
+    @MockBean
+    private RtsService rtsService;
+
+    @Test
+    public void shouldReturnStudent() throws Exception {
+        Student student = new Student(1, "studentId", "CA", "client");
+        when(studentService.findStudentById(1)).thenReturn(Optional.of(student));
+
+        http.perform(get(new URI("/students/1"))
+            .contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("id", is(1)))
+            .andExpect(jsonPath("loginSSID", is("studentId")))
+            .andExpect(jsonPath("stateCode", is("CA")))
+            .andExpect(jsonPath("clientName", is("client")));
+
+        verify(studentService).findStudentById(1);
     }
 
     @Test
-    public void shouldReturnNotFound() {
-        given()
-            .accept(ContentType.JSON)
-        .when()
-            .get(String.format("/students/%s", 999999))
-        .then()
-            .statusCode(404);
+    public void shouldReturnNotFoundWhenStudentNotFound() throws Exception {
+        when(studentService.findStudentById(1)).thenReturn(Optional.empty());
+        http.perform(get(new URI("/students/1"))
+            .contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNotFound());
+
+        verify(studentService).findStudentById(1);
+    }
+
+    @Test
+    public void shouldReturnRtsAttributeForStudent() throws Exception {
+        when(rtsService.findRtsStudentPackageAttribute("client", 1, "testName")).thenReturn(Optional.of(new RtsStudentPackageAttribute("testName", "testValue")));
+
+        http.perform(get(new URI("/students/1/rts/client/testName"))
+            .contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("name", is("testName")))
+            .andExpect(jsonPath("value", is("testValue")));
+    }
+
+    @Test
+    public void shouldReturnNotFoundWhenAttributeNotFound() throws Exception {
+        when(rtsService.findRtsStudentPackageAttribute("client", 1, "name")).thenReturn(Optional.empty());
+        http.perform(get(new URI("/students/1/rts/client/name"))
+            .contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNotFound());
+
+        verify(rtsService).findRtsStudentPackageAttribute("client", 1, "name");
     }
 }
