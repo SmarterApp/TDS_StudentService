@@ -12,6 +12,8 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import tds.common.web.exceptions.NotFoundException;
@@ -65,17 +67,12 @@ public class StudentControllerTest {
     public void shouldReturnRtsAttribute() {
         RtsStudentPackageAttribute attribute = new RtsStudentPackageAttribute("name", "value");
 
-        when(rtsService.findRtsStudentPackageAttribute("client", 1, "name")).thenReturn(Optional.of(attribute));
-        ResponseEntity<RtsStudentPackageAttribute> response = controller.findRtsStudentPackageAttribute(1, "client", "name");
-        verify(rtsService).findRtsStudentPackageAttribute("client", 1, "name");
+        when(rtsService.findRtsStudentPackageAttributes("client", 1, new String[]{"name"})).thenReturn(Collections.singletonList(attribute));
+        ResponseEntity<List<RtsStudentPackageAttribute>> response = controller.findRtsStudentPackageAttributes(1, "client", new String[]{"name"});
+        verify(rtsService).findRtsStudentPackageAttributes("client", 1, new String[]{"name"});
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response.getBody()).isEqualTo(attribute);
-    }
-
-    @Test (expected = NotFoundException.class)
-    public void shouldHandleRtsAttributeNotFound() {
-        when(rtsService.findRtsStudentPackageAttribute("client", 1, "name")).thenReturn(Optional.empty());
-        controller.findRtsStudentPackageAttribute(1, "client", "name");
+        assertThat(response.getBody()).hasSize(1);
+        assertThat(response.getBody().get(0)).isEqualTo(attribute);
     }
 }

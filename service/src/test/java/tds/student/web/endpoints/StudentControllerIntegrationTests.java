@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.net.URI;
+import java.util.Collections;
 import java.util.Optional;
 
 import tds.student.RtsStudentPackageAttribute;
@@ -19,6 +20,7 @@ import tds.student.services.RtsService;
 import tds.student.services.StudentService;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -65,22 +67,13 @@ public class StudentControllerIntegrationTests {
 
     @Test
     public void shouldReturnRtsAttributeForStudent() throws Exception {
-        when(rtsService.findRtsStudentPackageAttribute("client", 1, "testName")).thenReturn(Optional.of(new RtsStudentPackageAttribute("testName", "testValue")));
+        when(rtsService.findRtsStudentPackageAttributes(any(String.class), any(int.class), any(String[].class)))
+            .thenReturn(Collections.singletonList(new RtsStudentPackageAttribute("testName", "testValue")));
 
-        http.perform(get(new URI("/students/1/rts/client/testName"))
+        http.perform(get(new URI("/students/1/rts/client?attributeName=testName"))
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("name", is("testName")))
-            .andExpect(jsonPath("value", is("testValue")));
-    }
-
-    @Test
-    public void shouldReturnNotFoundWhenAttributeNotFound() throws Exception {
-        when(rtsService.findRtsStudentPackageAttribute("client", 1, "name")).thenReturn(Optional.empty());
-        http.perform(get(new URI("/students/1/rts/client/name"))
-            .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isNotFound());
-
-        verify(rtsService).findRtsStudentPackageAttribute("client", 1, "name");
+            .andExpect(jsonPath("[0].name", is("testName")))
+            .andExpect(jsonPath("[0].value", is("testValue")));
     }
 }

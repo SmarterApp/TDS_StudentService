@@ -6,8 +6,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 import tds.common.web.exceptions.NotFoundException;
 import tds.student.RtsStudentPackageAttribute;
@@ -37,14 +40,12 @@ class StudentController {
         return ResponseEntity.ok(student);
     }
 
-    @RequestMapping(value = "{id}/rts/{clientName}/{attributeName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "{id}/rts/{clientName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    ResponseEntity<RtsStudentPackageAttribute> findRtsStudentPackageAttribute(@PathVariable long id,
-                                                                              @PathVariable String clientName,
-                                                                              @PathVariable String attributeName) {
-        final RtsStudentPackageAttribute rtsStudentPackageAttribute = rtsService.findRtsStudentPackageAttribute(clientName, id, attributeName)
-            .orElseThrow(() -> new NotFoundException("Could not find attribute for client %s and student %d", clientName, id));
+    ResponseEntity<List<RtsStudentPackageAttribute>> findRtsStudentPackageAttributes(@PathVariable long id,
+                                                                                     @PathVariable String clientName,
+                                                                                     @RequestParam String[] attributeName) {
 
-        return ResponseEntity.ok(rtsStudentPackageAttribute);
+        return ResponseEntity.ok(rtsService.findRtsStudentPackageAttributes(clientName, id, attributeName));
     }
 }

@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Optional;
+import java.util.List;
 
 import tds.dll.common.rtspackage.common.exception.RtsPackageWriterException;
 import tds.dll.common.rtspackage.student.StudentPackageWriter;
@@ -56,26 +56,26 @@ public class RtsServiceImplIntegrationTests {
     public void shouldReadPackage() throws IOException, RtsPackageWriterException {
         insertData();
 
-        Optional<RtsStudentPackageAttribute> maybeRtsAttribute = rtsService.findRtsStudentPackageAttribute("SBAC_PT", 1, "LglFNm");
+        List<RtsStudentPackageAttribute> attributes = rtsService.findRtsStudentPackageAttributes("SBAC_PT", 1, new String[]{"LglFNm"});
 
-        assertThat(maybeRtsAttribute).isPresent();
-        assertThat(maybeRtsAttribute.get().getName()).isEqualTo("LglFNm");
-        assertThat(maybeRtsAttribute.get().getValue()).isEqualTo("ASL");
+        assertThat(attributes).hasSize(1);
+        assertThat(attributes.get(0).getName()).isEqualTo("LglFNm");
+        assertThat(attributes.get(0).getValue()).isEqualTo("ASL");
     }
 
     @Test
     public void shouldReturnEmptyOptionalWhenPackageNotFound() {
-        Optional<RtsStudentPackageAttribute> maybeRtsAttribute = rtsService.findRtsStudentPackageAttribute("SBAC_PT", 1, "NameOfInstitution");
-        assertThat(maybeRtsAttribute).isNotPresent();
+        List<RtsStudentPackageAttribute> attributes = rtsService.findRtsStudentPackageAttributes("SBAC_PT", 1, new String[]{"NameOfInstitution"});
+        assertThat(attributes).isEmpty();
     }
 
     @Test
     public void shouldReturnEmptyWhenAttributeCannotBeFound() throws IOException, RtsPackageWriterException {
         insertData();
 
-        Optional<RtsStudentPackageAttribute> maybeRtsAttribute = rtsService.findRtsStudentPackageAttribute("SBAC_PT", 1, "Bogus");
+        List<RtsStudentPackageAttribute> attributes = rtsService.findRtsStudentPackageAttributes("SBAC_PT", 1, new String[]{"Bogus"});
 
-        assertThat(maybeRtsAttribute).isNotPresent();
+        assertThat(attributes).isEmpty();
     }
 
     private void insertData() {
