@@ -79,7 +79,7 @@ public class RtsServiceImplTest {
         when(rtsRepository.findRtsStudentPackage("client", 1)).thenReturn(Optional.of(blob));
         when(packageReader.read(blob)).thenReturn(true);
 
-        List<RtsStudentPackageAttribute> maybeAttribute = rtsService.findRtsStudentPackageAttributes("client", 1, new String[]{"attribute"});
-        assertThat(maybeAttribute).isEmpty();
+        List<RtsStudentPackageAttribute> attributes = rtsService.findRtsStudentPackageAttributes("client", 1, new String[]{"attribute"});
+        assertThat(attributes).isEmpty();
     }
 }
