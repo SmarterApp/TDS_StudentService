@@ -43,4 +43,12 @@ class ExceptionAdvice {
         return new ResponseEntity<>(
             new ExceptionMessageResource(HttpStatus.BAD_REQUEST.toString(), String.format("Invalid value: %s", ex.getName())), HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    ResponseEntity<ExceptionMessageResource> handleBadRequest(final IllegalArgumentException ex) {
+        return new ResponseEntity<>(
+            new ExceptionMessageResource(HttpStatus.BAD_REQUEST.toString(), ex.getLocalizedMessage()), HttpStatus.BAD_REQUEST);
+    }
 }

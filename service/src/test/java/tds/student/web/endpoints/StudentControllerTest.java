@@ -12,7 +12,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +21,7 @@ import tds.student.Student;
 import tds.student.services.RtsService;
 import tds.student.services.StudentService;
 
+import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -63,16 +63,23 @@ public class StudentControllerTest {
         controller.findStudentById(1);
     }
 
-    @Test
-    public void shouldReturnRtsAttribute() {
-        RtsStudentPackageAttribute attribute = new RtsStudentPackageAttribute("name", "value");
+    @Test (expected = IllegalArgumentException.class)
+    public void shouldReturnSingleRtsAttribute() {
+        controller.findRtsStudentPackageAttributes(1, "client", null);
+    }
 
-        when(rtsService.findRtsStudentPackageAttributes("client", 1, new String[]{"name"})).thenReturn(Collections.singletonList(attribute));
-        ResponseEntity<List<RtsStudentPackageAttribute>> response = controller.findRtsStudentPackageAttributes(1, "client", new String[]{"name"});
-        verify(rtsService).findRtsStudentPackageAttributes("client", 1, new String[]{"name"});
+    @Test
+    public void shouldReturnRtsAttributes() {
+        RtsStudentPackageAttribute attribute = new RtsStudentPackageAttribute("name", "value");
+        RtsStudentPackageAttribute attribute2 = new RtsStudentPackageAttribute("name2", "value");
+
+        when(rtsService.findRtsStudentPackageAttributes("client", 1, new String[]{"name", "name2"})).thenReturn(asList(attribute, attribute2));
+        ResponseEntity<List<RtsStudentPackageAttribute>> response = controller.findRtsStudentPackageAttributes(1, "client", new String[]{"name","name2"});
+        verify(rtsService).findRtsStudentPackageAttributes("client", 1, new String[]{"name", "name2"});
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response.getBody()).hasSize(1);
+        assertThat(response.getBody()).hasSize(2);
         assertThat(response.getBody().get(0)).isEqualTo(attribute);
+        assertThat(response.getBody().get(1)).isEqualTo(attribute2);
     }
 }

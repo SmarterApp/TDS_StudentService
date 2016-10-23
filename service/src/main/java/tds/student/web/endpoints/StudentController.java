@@ -3,10 +3,10 @@ package tds.student.web.endpoints;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.MatrixVariable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,12 +40,15 @@ class StudentController {
         return ResponseEntity.ok(student);
     }
 
-    @RequestMapping(value = "{id}/rts/{clientName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "{id}/rts/{clientName}/{attributes}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     ResponseEntity<List<RtsStudentPackageAttribute>> findRtsStudentPackageAttributes(@PathVariable long id,
                                                                                      @PathVariable String clientName,
-                                                                                     @RequestParam String[] attributeName) {
+                                                                                     @MatrixVariable(required = false) String[] attributes) {
+        if (attributes == null || attributes.length == 0) {
+            throw new IllegalArgumentException("attributes with values is required");
+        }
 
-        return ResponseEntity.ok(rtsService.findRtsStudentPackageAttributes(clientName, id, attributeName));
+        return ResponseEntity.ok(rtsService.findRtsStudentPackageAttributes(clientName, id, attributes));
     }
 }
