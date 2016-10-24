@@ -76,7 +76,7 @@ public class StudentControllerIntegrationTests {
         when(rtsService.findRtsStudentPackageAttributes(any(String.class), any(int.class), any(String[].class)))
             .thenReturn(Collections.singletonList(new RtsStudentPackageAttribute("testName", "testValue")));
 
-        http.perform(get(new URI("/students/1/rts/client/attributes;names=testName,otherName"))
+        http.perform(get(new URI("/students/1/rts/client/attributes=testName,otherName"))
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(jsonPath("[0].name", is("testName")))
