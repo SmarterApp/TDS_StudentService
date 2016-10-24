@@ -3,6 +3,8 @@ package tds.student.services.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import tds.dll.common.rtspackage.IRtsPackageReader;
@@ -12,7 +14,7 @@ import tds.student.repositories.RtsStudentPackageQueryRepository;
 import tds.student.services.RtsService;
 
 @Service
-public class RtsServiceImpl implements RtsService {
+class RtsServiceImpl implements RtsService {
     private final RtsStudentPackageQueryRepository rtsStudentPackageQueryRepository;
     private final IRtsPackageReader packageReader;
 
@@ -23,24 +25,26 @@ public class RtsServiceImpl implements RtsService {
     }
 
     @Override
-    public Optional<RtsStudentPackageAttribute> findRtsStudentPackageAttribute(String clientName, long studentId, String attributeName) {
+    public List<RtsStudentPackageAttribute> findRtsStudentPackageAttributes(String clientName, long studentId, String[] attributeNames) {
         Optional<byte[]> maybePackage = rtsStudentPackageQueryRepository.findRtsStudentPackage(clientName, studentId);
+        List<RtsStudentPackageAttribute> attributes = new ArrayList<>();
         if (!maybePackage.isPresent()) {
-            return Optional.empty();
+            return attributes;
         }
 
-        Optional<RtsStudentPackageAttribute> maybeAttribute = Optional.empty();
         try {
             if (packageReader.read(maybePackage.get())) {
-                String value = packageReader.getFieldValue(attributeName);
-                if (value != null) {
-                    maybeAttribute = Optional.of(new RtsStudentPackageAttribute(attributeName, value));
+                for (String attributeName : attributeNames) {
+                    String value = packageReader.getFieldValue(attributeName);
+                    if (value != null) {
+                        attributes.add(new RtsStudentPackageAttribute(attributeName, value));
+                    }
                 }
             }
         } catch (RtsPackageReaderException e) {
             throw new RuntimeException(e);
         }
 
-        return maybeAttribute;
+        return attributes;
     }
 }
