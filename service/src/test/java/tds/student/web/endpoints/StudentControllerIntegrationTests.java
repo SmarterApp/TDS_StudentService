@@ -8,6 +8,7 @@ import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -16,6 +17,7 @@ import java.net.URI;
 import java.util.Collections;
 import java.util.Optional;
 
+import tds.common.web.advice.ExceptionAdvice;
 import tds.student.RtsStudentPackageAttribute;
 import tds.student.Student;
 import tds.student.services.RtsService;
@@ -33,6 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(StudentController.class)
+@Import(ExceptionAdvice.class)
 public class StudentControllerIntegrationTests {
     @Autowired
     private MockMvc http;
@@ -88,7 +91,7 @@ public class StudentControllerIntegrationTests {
     }
 
     @Test
-    public void shouldReturnNotFoundIfAttributesNotGiven() throws Exception {
+    public void shouldReturnBadRequestIfAttributesNotGiven() throws Exception {
         http.perform(get(new URI("/students/1/rts/client/attributes"))
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isBadRequest());
