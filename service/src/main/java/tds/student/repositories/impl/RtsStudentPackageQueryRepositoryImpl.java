@@ -10,7 +10,6 @@ import org.springframework.jdbc.support.lob.DefaultLobHandler;
 import org.springframework.jdbc.support.lob.LobHandler;
 import org.springframework.stereotype.Repository;
 
-import javax.sql.DataSource;
 import java.util.Optional;
 
 import tds.student.repositories.RtsStudentPackageQueryRepository;
@@ -21,8 +20,8 @@ public class RtsStudentPackageQueryRepositoryImpl implements RtsStudentPackageQu
     private final NamedParameterJdbcTemplate jdbcTemplate;
     private final LobHandler lobHandler;
 
-    public RtsStudentPackageQueryRepositoryImpl(DataSource dataSource) {
-        this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+    public RtsStudentPackageQueryRepositoryImpl(NamedParameterJdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
         lobHandler = new DefaultLobHandler();
     }
 

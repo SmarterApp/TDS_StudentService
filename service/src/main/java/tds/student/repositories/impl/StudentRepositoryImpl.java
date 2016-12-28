@@ -7,7 +7,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
-import javax.sql.DataSource;
 import java.util.Optional;
 
 import tds.student.Student;
@@ -18,15 +17,15 @@ class StudentRepositoryImpl implements StudentRepository {
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
     @Autowired
-    public StudentRepositoryImpl(final DataSource dataSource) {
-        jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+    public StudentRepositoryImpl(final NamedParameterJdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
     public Optional<Student> findStudentById(long id) {
         final SqlParameterSource parameters = new MapSqlParameterSource("id", id);
 
-        String query = "SELECT studentkey as id, studentid, statecode, clientname \n" +
+        String query = "SELECT studentkey AS id, studentid, statecode, clientname \n" +
             "FROM session.r_studentkeyid \n" +
             "WHERE studentkey = :id";
 
