@@ -63,7 +63,7 @@ public class StudentControllerTest {
         controller.findStudentById(1);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void shouldReturnSingleRtsAttribute() {
         controller.findRtsStudentPackageAttributes(1, "client", null);
     }
@@ -74,7 +74,7 @@ public class StudentControllerTest {
         RtsStudentPackageAttribute attribute2 = new RtsStudentPackageAttribute("name2", "value");
 
         when(rtsService.findRtsStudentPackageAttributes("client", 1, new String[]{"name", "name2"})).thenReturn(asList(attribute, attribute2));
-        ResponseEntity<List<RtsStudentPackageAttribute>> response = controller.findRtsStudentPackageAttributes(1, "client", new String[]{"name","name2"});
+        ResponseEntity<List<RtsStudentPackageAttribute>> response = controller.findRtsStudentPackageAttributes(1, "client", new String[]{"name", "name2"});
         verify(rtsService).findRtsStudentPackageAttributes("client", 1, new String[]{"name", "name2"});
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);

@@ -14,5 +14,4 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
         urlPathHelper.setRemoveSemicolonContent(false);
         configurer.setUrlPathHelper(urlPathHelper);
     }
-
 }
