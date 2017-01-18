@@ -1,12 +1,14 @@
 package tds.student.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import tds.common.cache.CacheType;
 import tds.dll.common.rtspackage.IRtsPackageReader;
 import tds.dll.common.rtspackage.common.exception.RtsPackageReaderException;
 import tds.student.RtsStudentPackageAttribute;
@@ -25,6 +27,7 @@ class RtsServiceImpl implements RtsService {
     }
 
     @Override
+    @Cacheable(CacheType.MEDIUM_TERM)
     public List<RtsStudentPackageAttribute> findRtsStudentPackageAttributes(String clientName, long studentId, String[] attributeNames) {
         Optional<byte[]> maybePackage = rtsStudentPackageQueryRepository.findRtsStudentPackage(clientName, studentId);
         List<RtsStudentPackageAttribute> attributes = new ArrayList<>();
