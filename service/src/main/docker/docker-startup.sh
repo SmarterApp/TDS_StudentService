@@ -11,6 +11,7 @@ java \
     -Dspring.datasource.username="${STUDENT_DB_USER}" \
     -Dspring.datasource.password="${STUDENT_DB_PASSWORD}" \
     -Dspring.datasource.type=com.zaxxer.hikari.HikariDataSource \
+    -Dspring.datasource.driver-class-name=com.mysql.jdbc.Driver \
     -jar /tds-student-service.jar \
     --server-port="8080" \
     --server.undertow.buffer-size=16384 \
