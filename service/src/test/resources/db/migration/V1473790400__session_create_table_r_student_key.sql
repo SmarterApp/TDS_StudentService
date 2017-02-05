@@ -16,5 +16,3 @@ CREATE TABLE r_studentkeyid (
   PRIMARY KEY (studentkey),
   UNIQUE KEY ix_studentid_statecode (studentid,statecode)
 );
-
-INSERT INTO r_studentkeyid (studentid, statecode, clientname) VALUES ('adv001','CA','SBAC_PT');
