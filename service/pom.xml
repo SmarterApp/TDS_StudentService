@@ -87,6 +87,14 @@
                     <groupId>org.opentestsystem.shared</groupId>
                     <artifactId>prog-mgmnt-client-null-impl</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-context-support</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-jdbc</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
 
