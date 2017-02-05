@@ -178,3 +178,4 @@ $RECYCLE.BIN/
 ### TDS Additions ###
 .idea/*
 **/*.iml
+**/application.properties
