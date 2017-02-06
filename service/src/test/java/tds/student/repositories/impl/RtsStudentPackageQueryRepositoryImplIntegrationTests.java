@@ -1,4 +1,4 @@
-package tds.student.services.impl;
+package tds.student.repositories.impl;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
@@ -13,74 +13,78 @@ import org.springframework.jdbc.support.lob.LobCreator;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.sql.DataSource;
-import java.io.IOException;
 import java.io.InputStream;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.Optional;
 
-import tds.dll.common.rtspackage.common.exception.RtsPackageWriterException;
 import tds.dll.common.rtspackage.student.StudentPackageWriter;
-import tds.student.RtsStudentPackageAttribute;
-import tds.student.services.RtsService;
+import tds.student.model.RtsStudentInfo;
+import tds.student.repositories.RtsStudentPackageQueryRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
-public class RtsServiceImplIntegrationTests {
+public class RtsStudentPackageQueryRepositoryImplIntegrationTests {
     @Autowired
-    private DataSource dataSource;
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    private RtsService rtsService;
+    private RtsStudentPackageQueryRepository repository;
 
     private byte[] studentPackageBytes;
 
     @Before
     public void setUp() throws Exception {
-        jdbcTemplate = new JdbcTemplate(dataSource);
-
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("studentPackage.xml")) {
             String studentPackage = IOUtils.toString(inputStream);
             StudentPackageWriter writer = new StudentPackageWriter();
             writer.writeObject(studentPackage);
             studentPackageBytes = IOUtils.toByteArray(writer.getInputStream());
         }
-    }
 
-    @Test
-    public void shouldReadPackage() throws IOException, RtsPackageWriterException {
         insertData();
-
-        List<RtsStudentPackageAttribute> attributes = rtsService.findRtsStudentPackageAttributes("SBAC_PT", 1, new String[]{"LglFNm"});
-
-        assertThat(attributes).hasSize(1);
-        assertThat(attributes.get(0).getName()).isEqualTo("LglFNm");
-        assertThat(attributes.get(0).getValue()).isEqualTo("ASL");
     }
 
     @Test
-    public void shouldReturnEmptyOptionalWhenPackageNotFound() {
-        List<RtsStudentPackageAttribute> attributes = rtsService.findRtsStudentPackageAttributes("SBAC_PT", 1, new String[]{"NameOfInstitution"});
-        assertThat(attributes).isEmpty();
+    public void shouldGetRtsStudentPackageInfo() {
+        Optional<RtsStudentInfo> maybeRtsStudentInfo = repository.findStudentInfo("SBAC_PT", 1);
+
+        RtsStudentInfo info = maybeRtsStudentInfo.get();
+        assertThat(info.getClientName()).isEqualTo("SBAC_PT");
+        assertThat(info.getId()).isEqualTo(1);
+        assertThat(info.getLoginSSID()).isEqualTo("adv001");
+        assertThat(info.getStateCode()).isEqualTo("CA");
+        assertThat(info.getStudentPackage()).isEqualTo(studentPackageBytes);
     }
 
     @Test
-    public void shouldReturnEmptyWhenAttributeCannotBeFound() throws IOException, RtsPackageWriterException {
-        insertData();
+    public void shouldBeEmptyWhenRtsStudentPackageInfoCannotBeFound() {
+        Optional<RtsStudentInfo> maybeRtsStudentInfo = repository.findStudentInfo("SBAC", 1);
+        assertThat(maybeRtsStudentInfo).isNotPresent();
+    }
 
-        List<RtsStudentPackageAttribute> attributes = rtsService.findRtsStudentPackageAttributes("SBAC_PT", 1, new String[]{"Bogus"});
+    @Test
+    public void shouldFindRtsPackageBytes() {
+        Optional<byte[]> maybePackage = repository.findRtsStudentPackage("SBAC_PT", 1);
+        assertThat(maybePackage.get()).isEqualTo(studentPackageBytes);
+    }
 
-        assertThat(attributes).isEmpty();
+    @Test
+    public void shouldBeEmptyWhenPackageCannotBeFound() {
+        Optional<byte[]> maybePackage = repository.findRtsStudentPackage("SBAC", 1);
+        assertThat(maybePackage).isNotPresent();
     }
 
     private void insertData() {
+        String studentKeySQL = "insert into r_studentkeyid values (1, 'adv001', 'CA', 'SBAC_PT')";
+
         String SQL = "insert into r_studentpackage (_key, studentkey, clientname, package, version, datecreated) \n" +
             "values (?, ?, ?, ?, ?, NOW());";
+
+        jdbcTemplate.execute(studentKeySQL);
 
         jdbcTemplate.execute(
             SQL,

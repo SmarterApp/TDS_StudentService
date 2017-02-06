@@ -48,7 +48,10 @@ public class StudentControllerIntegrationTests {
 
     @Test
     public void shouldReturnStudent() throws Exception {
-        Student student = new Student(1, "studentId", "CA", "client");
+        Student student = new Student.Builder(1, "client")
+            .withStateCode("CA")
+            .withLoginSSID("studentId")
+            .build();
         when(studentService.findStudentById(1)).thenReturn(Optional.of(student));
 
         http.perform(get(new URI("/students/1"))

@@ -51,4 +51,13 @@ class StudentController {
 
         return ResponseEntity.ok(rtsService.findRtsStudentPackageAttributes(clientName, id, attributes));
     }
+
+    @RequestMapping(value = "{clientName}/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    ResponseEntity<Student> findStudent(@PathVariable String clientName, @PathVariable long id) {
+        final Student student = rtsService.findStudent(clientName, id)
+            .orElseThrow(() -> new NotFoundException("Could not find student with id %d", id));
+
+        return ResponseEntity.ok(student);
+    }
 }

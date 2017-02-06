@@ -2,6 +2,8 @@ package tds.student.repositories;
 
 import java.util.Optional;
 
+import tds.student.model.RtsStudentInfo;
+
 /**
  * Handles the data access interactions with the Student Package (r_studentpackage table).
  */
@@ -14,4 +16,13 @@ public interface RtsStudentPackageQueryRepository {
      * @return byte array containing the serialized gzipped data if found otherwise empty
      */
     Optional<byte[]> findRtsStudentPackage(String clientName, long studentId);
+
+    /**
+     * Finds the {@link tds.student.model.RtsStudentInfo} for the client name and id
+     *
+     * @param clientName client name for the student
+     * @param studentId  the student id
+     * @return {@link tds.student.model.RtsStudentInfo}
+     */
+    Optional<RtsStudentInfo> findStudentInfo(String clientName, long studentId);
 }

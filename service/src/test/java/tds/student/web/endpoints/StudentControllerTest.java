@@ -47,7 +47,10 @@ public class StudentControllerTest {
 
     @Test
     public void shouldReturnStudentResourceById() {
-        Student student = new Student(1, "testId", "CA", "clientName");
+        Student student = new Student.Builder(1, "clientName")
+            .withStateCode("CA")
+            .withLoginSSID("testId")
+            .build();
 
         when(studentService.findStudentById(1)).thenReturn(Optional.of(student));
         ResponseEntity<Student> studentResponse = controller.findStudentById(1);

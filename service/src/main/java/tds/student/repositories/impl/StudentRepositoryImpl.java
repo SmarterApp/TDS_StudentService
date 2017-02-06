@@ -31,10 +31,11 @@ class StudentRepositoryImpl implements StudentRepository {
 
         Optional<Student> student;
         try {
-            student = Optional.of(jdbcTemplate.queryForObject(query, parameters, (rs, rowNum) -> new Student(rs.getLong("id"),
-                rs.getString("studentid"),
-                rs.getString("statecode"),
-                rs.getString("clientname"))));
+            student = Optional.of(jdbcTemplate.queryForObject(query, parameters, (rs, rowNum) -> new Student.Builder(rs.getLong("id"), rs.getString("clientname"))
+                .withStateCode(rs.getString("stateCode"))
+                .withLoginSSID(rs.getString("studentid"))
+                .build()
+            ));
         } catch (EmptyResultDataAccessException e) {
             student = Optional.empty();
         }
