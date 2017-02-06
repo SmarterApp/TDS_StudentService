@@ -58,6 +58,7 @@ class RtsServiceImpl implements RtsService {
     }
 
     @Override
+    @Cacheable(CacheType.MEDIUM_TERM)
     public Optional<Student> findStudent(String clientName, long studentId) {
         Optional<RtsStudentInfo> maybeStudentInfo = rtsStudentPackageQueryRepository.findStudentInfo(clientName, studentId);
         if (!maybeStudentInfo.isPresent()) {
@@ -74,6 +75,8 @@ class RtsServiceImpl implements RtsService {
                 List<RtsStudentPackageRelationship> relationships = parseRelationshipsOutOfPackage(packageReader);
 
                 Student student = new Student.Builder(studentInfo.getId(), studentInfo.getClientName())
+                    .withLoginSSID(studentInfo.getLoginSSID())
+                    .withStateCode(studentInfo.getStateCode())
                     .withStudentPackage(rtsStudent)
                     .withAttributes(attributes)
                     .withRelationships(relationships)

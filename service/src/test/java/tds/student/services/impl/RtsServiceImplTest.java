@@ -15,6 +15,8 @@ import java.util.Optional;
 import tds.dll.common.rtspackage.common.exception.RtsPackageWriterException;
 import tds.dll.common.rtspackage.student.StudentPackageWriter;
 import tds.student.RtsStudentPackageAttribute;
+import tds.student.Student;
+import tds.student.model.RtsStudentInfo;
 import tds.student.repositories.RtsStudentPackageQueryRepository;
 import tds.student.services.RtsService;
 
@@ -75,7 +77,32 @@ public class RtsServiceImplTest {
     public void shouldReturnEmptyIfAttributeCouldNotBeFoundInPackage() throws Exception {
         when(rtsRepository.findRtsStudentPackage("client", 1)).thenReturn(Optional.of(studentPackageBytes));
 
-        List<RtsStudentPackageAttribute> attributes = rtsService.findRtsStudentPackageAttributes("client", 1, new String[]{"bogus"});
+        List<RtsStudentPackageAttribute> attributes = rtsService.findRtsStudentPackageAttributes("client", 1, new String[]{"bogus "});
         assertThat(attributes).isEmpty();
+    }
+
+    @Test
+    public void shouldReturnStudent() {
+        RtsStudentInfo info = new RtsStudentInfo(
+            1,
+            "loginSSID",
+            "CA",
+            "SBAC_PT",
+            studentPackageBytes
+        );
+
+        when(rtsRepository.findStudentInfo("SBAC_PT", 1)).thenReturn(Optional.of(info));
+
+        Optional<Student> maybeStudent = rtsService.findStudent("SBAC_PT", 1);
+
+        Student student = maybeStudent.get();
+
+        assertThat(student.getId()).isEqualTo(1);
+        assertThat(student.getLoginSSID()).isEqualTo("loginSSID");
+        assertThat(student.getStateCode()).isEqualTo("CA");
+        assertThat(student.getClientName()).isEqualTo("SBAC_PT");
+        assertThat(student.getStudentPackage()).isNotNull();
+        assertThat(student.getRelationships()).hasSize(6);
+        assertThat(student.getAttributes()).hasSize(19);
     }
 }
