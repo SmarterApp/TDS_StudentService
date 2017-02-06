@@ -109,7 +109,7 @@ class RtsServiceImpl implements RtsService {
         attributes.add(new RtsStudentPackageAttribute("DemographicRaceTwoOrMoreRaces", student.getDemographicRaceTwoOrMoreRaces()));
         attributes.add(new RtsStudentPackageAttribute("IDEAIndicator", student.getIDEAIndicator()));
         attributes.add(new RtsStudentPackageAttribute("LEPStatus", student.getLEPStatus()));
-        attributes.add(new RtsStudentPackageAttribute("Section504Status", student.getSection504Status()));// TODO: UNKNOWN/CANNOT PROVIDE
+        attributes.add(new RtsStudentPackageAttribute("Section504Status", student.getSection504Status()));
 
         attributes.add(new RtsStudentPackageAttribute("EconomicDisadvantageStatus", student.getEconomicDisadvantageStatus()));
         // SB-512
