@@ -85,4 +85,17 @@ public class StudentControllerTest {
         assertThat(response.getBody().get(0)).isEqualTo(attribute);
         assertThat(response.getBody().get(1)).isEqualTo(attribute2);
     }
+
+    @Test
+    public void shouldReturnStudent() {
+        Student student = new Student.Builder(1, "SBAC_PT").build();
+
+        when(rtsService.findStudent("SBAC_PT", 1)).thenReturn(Optional.of(student));
+
+        ResponseEntity<Student> entity = controller.findStudent("SBAC_PT", 1);
+        verify(rtsService).findStudent("SBAC_PT", 1);
+
+        assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(entity.getBody()).isEqualTo(student);
+    }
 }
