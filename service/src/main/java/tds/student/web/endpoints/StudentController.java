@@ -19,7 +19,6 @@ import tds.student.services.RtsService;
 import tds.student.services.StudentService;
 
 @RestController
-@RequestMapping("/students")
 class StudentController {
     private final StudentService studentService;
     private final RtsService rtsService;
@@ -31,7 +30,7 @@ class StudentController {
         this.rtsService = rtsService;
     }
 
-    @RequestMapping(value = "{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "students/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     ResponseEntity<Student> findStudentById(@PathVariable long id) {
         final Student student = studentService.findStudentById(id)
@@ -40,7 +39,7 @@ class StudentController {
         return ResponseEntity.ok(student);
     }
 
-    @RequestMapping(value = "{id}/rts/{clientName}/{attributes}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "students/{id}/rts/{clientName}/{attributes}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     ResponseEntity<List<RtsStudentPackageAttribute>> findRtsStudentPackageAttributes(@PathVariable long id,
                                                                                      @PathVariable String clientName,
@@ -50,5 +49,14 @@ class StudentController {
         }
 
         return ResponseEntity.ok(rtsService.findRtsStudentPackageAttributes(clientName, id, attributes));
+    }
+
+    @RequestMapping(value = "{clientName}/students/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    ResponseEntity<Student> findStudent(@PathVariable String clientName, @PathVariable long id) {
+        final Student student = rtsService.findStudent(clientName, id)
+            .orElseThrow(() -> new NotFoundException("Could not find student with id %d", id));
+
+        return ResponseEntity.ok(student);
     }
 }

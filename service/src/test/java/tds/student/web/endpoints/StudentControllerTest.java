@@ -47,7 +47,10 @@ public class StudentControllerTest {
 
     @Test
     public void shouldReturnStudentResourceById() {
-        Student student = new Student(1, "testId", "CA", "clientName");
+        Student student = new Student.Builder(1, "clientName")
+            .withStateCode("CA")
+            .withLoginSSID("testId")
+            .build();
 
         when(studentService.findStudentById(1)).thenReturn(Optional.of(student));
         ResponseEntity<Student> studentResponse = controller.findStudentById(1);
@@ -81,5 +84,18 @@ public class StudentControllerTest {
         assertThat(response.getBody()).hasSize(2);
         assertThat(response.getBody().get(0)).isEqualTo(attribute);
         assertThat(response.getBody().get(1)).isEqualTo(attribute2);
+    }
+
+    @Test
+    public void shouldReturnStudent() {
+        Student student = new Student.Builder(1, "SBAC_PT").build();
+
+        when(rtsService.findStudent("SBAC_PT", 1)).thenReturn(Optional.of(student));
+
+        ResponseEntity<Student> entity = controller.findStudent("SBAC_PT", 1);
+        verify(rtsService).findStudent("SBAC_PT", 1);
+
+        assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(entity.getBody()).isEqualTo(student);
     }
 }
