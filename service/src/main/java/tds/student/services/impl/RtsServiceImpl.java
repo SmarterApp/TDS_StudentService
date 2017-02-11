@@ -121,6 +121,57 @@ class RtsServiceImpl implements RtsService {
             attributes.add(new RtsStudentPackageAttribute("LEPExitDate", sdf.format(student.getLEPExitDate())));
         }
 
+        attributes.add(new RtsStudentPackageAttribute("AlternateSSID", student.getAlternateSSID()));
+
+        if (student.getMigrantStatus() == null) {
+            attributes.add(new RtsStudentPackageAttribute("MigrantStatus", ""));
+        } else {
+            attributes.add(new RtsStudentPackageAttribute("MigrantStatus", student.getMigrantStatus()));
+        }
+
+        if (student.getLanguageCode() == null) {
+            attributes.add(new RtsStudentPackageAttribute("LanguageCode", ""));
+        } else {
+            attributes.add(new RtsStudentPackageAttribute("LanguageCode", student.getLanguageCode()));
+        }
+
+        if (student.getEnglishLanguageProficiencyLevel() == null) {
+            attributes.add(new RtsStudentPackageAttribute("EnglishLanguageProficiencLevel", ""));
+        } else {
+            attributes.add(new RtsStudentPackageAttribute("EnglishLanguageProficiencLevel",
+                student.getEnglishLanguageProficiencyLevel()));
+        }
+
+        if (student.getFirstEntryDateIntoUSSchool() == null) {
+            attributes.add(new RtsStudentPackageAttribute("FirstEntryDateIntoUSSchool", ""));
+        } else {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            attributes.add(new RtsStudentPackageAttribute("FirstEntryDateIntoUSSchool",
+                sdf.format(student.getFirstEntryDateIntoUSSchool())));
+        }
+
+        if (student.getLimitedEnglishProficiencyEntryDate() == null) {
+            attributes.add(new RtsStudentPackageAttribute("LimitedEnglishProficiencyEntryDate", ""));
+        } else {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            attributes.add(new RtsStudentPackageAttribute("LimitedEnglishProficiencyEntryDate",
+                sdf.format(student.getLimitedEnglishProficiencyEntryDate())));
+        }
+
+        if (student.getTitleIIILanguageInstructionProgramType() == null) {
+            attributes.add(new RtsStudentPackageAttribute("TitleIIILanguageInstructionProgramType", ""));
+        } else {
+            attributes.add(new RtsStudentPackageAttribute("TitleIIILanguageInstructionProgramType",
+                student.getTitleIIILanguageInstructionProgramType()));
+        }
+
+        if (student.getPrimaryDisabilityType() == null) {
+            attributes.add(new RtsStudentPackageAttribute("PrimaryDisabilityType", ""));
+        } else {
+            attributes.add(new RtsStudentPackageAttribute("PrimaryDisabilityType",
+                student.getPrimaryDisabilityType()));
+        }
+
         return attributes;
     }
 
