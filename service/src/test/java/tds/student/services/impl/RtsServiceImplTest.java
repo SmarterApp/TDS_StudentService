@@ -103,6 +103,6 @@ public class RtsServiceImplTest {
         assertThat(student.getClientName()).isEqualTo("SBAC_PT");
         assertThat(student.getStudentPackage()).isNotNull();
         assertThat(student.getRelationships()).hasSize(6);
-        assertThat(student.getAttributes()).hasSize(19);
+        assertThat(student.getAttributes()).hasSize(27);
     }
 }
