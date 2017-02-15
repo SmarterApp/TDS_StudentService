@@ -30,8 +30,16 @@ class StudentController {
         this.rtsService = rtsService;
     }
 
+    /**
+     * Finds the bare minimum information for a student
+     *
+     * @param id student id
+     * @return Student if found otherwise throws a {@link tds.common.web.exceptions.NotFoundException}
+     * @throws tds.common.web.exceptions.NotFoundException when student is not found
+     */
     @RequestMapping(value = "students/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
+    @Deprecated
     ResponseEntity<Student> findStudentById(@PathVariable long id) {
         final Student student = studentService.findStudentById(id)
             .orElseThrow(() -> new NotFoundException("Could not find student with id %d", id));

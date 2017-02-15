@@ -13,6 +13,8 @@ public interface StudentService {
      *
      * @param id student key
      * @return student if found otherwise empty optional
+     * @deprecated Please use {@link tds.student.services.RtsService} findStudent instead
      */
+    @Deprecated
     Optional<Student> findStudentById(long id);
 }
