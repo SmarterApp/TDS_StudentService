@@ -191,7 +191,7 @@ class RtsServiceImpl implements RtsService {
             RtsStudentPackageRelationship districtName = new RtsStudentPackageRelationship(
                 "DistrictName",
                 "District",
-                rtsRecord.get("entintyName"),
+                rtsRecord.get("entityName"),
                 rtsRecord.get("entityKey")
             );
 
