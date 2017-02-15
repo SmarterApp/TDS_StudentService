@@ -22,6 +22,7 @@ class StudentRepositoryImpl implements StudentRepository {
     }
 
     @Override
+    @Deprecated
     public Optional<Student> findStudentById(long id) {
         final SqlParameterSource parameters = new MapSqlParameterSource("id", id);
 

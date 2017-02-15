@@ -22,6 +22,7 @@ class StudentServiceImpl implements StudentService {
 
     @Override
     @Cacheable(CacheType.LONG_TERM)
+    @Deprecated
     public Optional<Student> findStudentById(long id) {
         return studentRepository.findStudentById(id);
     }

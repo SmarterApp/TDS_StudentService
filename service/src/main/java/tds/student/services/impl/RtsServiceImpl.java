@@ -1,9 +1,11 @@
 package tds.student.services.impl;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +26,10 @@ import tds.student.services.RtsService;
 
 @Service
 class RtsServiceImpl implements RtsService {
+    private static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
+
     private final RtsStudentPackageQueryRepository rtsStudentPackageQueryRepository;
+
 
     @Autowired
     public RtsServiceImpl(RtsStudentPackageQueryRepository rtsStudentPackageQueryRepository) {
@@ -122,55 +127,23 @@ class RtsServiceImpl implements RtsService {
         }
 
         attributes.add(new RtsStudentPackageAttribute("AlternateSSID", student.getAlternateSSID()));
+        attributes.add(new RtsStudentPackageAttribute("MigrantStatus", StringUtils.defaultString(student.getMigrantStatus())));
+        attributes.add(new RtsStudentPackageAttribute("LanguageCode", StringUtils.defaultString(student.getLanguageCode())));
 
-        if (student.getMigrantStatus() == null) {
-            attributes.add(new RtsStudentPackageAttribute("MigrantStatus", ""));
-        } else {
-            attributes.add(new RtsStudentPackageAttribute("MigrantStatus", student.getMigrantStatus()));
-        }
+        attributes.add(new RtsStudentPackageAttribute("EnglishLanguageProficiencLevel",
+            StringUtils.defaultString(student.getEnglishLanguageProficiencyLevel())));
 
-        if (student.getLanguageCode() == null) {
-            attributes.add(new RtsStudentPackageAttribute("LanguageCode", ""));
-        } else {
-            attributes.add(new RtsStudentPackageAttribute("LanguageCode", student.getLanguageCode()));
-        }
+        attributes.add(new RtsStudentPackageAttribute("FirstEntryDateIntoUSSchool",
+            formatDateString(student.getFirstEntryDateIntoUSSchool())));
 
-        if (student.getEnglishLanguageProficiencyLevel() == null) {
-            attributes.add(new RtsStudentPackageAttribute("EnglishLanguageProficiencLevel", ""));
-        } else {
-            attributes.add(new RtsStudentPackageAttribute("EnglishLanguageProficiencLevel",
-                student.getEnglishLanguageProficiencyLevel()));
-        }
+        attributes.add(new RtsStudentPackageAttribute("LimitedEnglishProficiencyEntryDate",
+            formatDateString(student.getLimitedEnglishProficiencyEntryDate())));
 
-        if (student.getFirstEntryDateIntoUSSchool() == null) {
-            attributes.add(new RtsStudentPackageAttribute("FirstEntryDateIntoUSSchool", ""));
-        } else {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            attributes.add(new RtsStudentPackageAttribute("FirstEntryDateIntoUSSchool",
-                sdf.format(student.getFirstEntryDateIntoUSSchool())));
-        }
+        attributes.add(new RtsStudentPackageAttribute("TitleIIILanguageInstructionProgramType",
+            StringUtils.defaultString(student.getTitleIIILanguageInstructionProgramType())));
 
-        if (student.getLimitedEnglishProficiencyEntryDate() == null) {
-            attributes.add(new RtsStudentPackageAttribute("LimitedEnglishProficiencyEntryDate", ""));
-        } else {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            attributes.add(new RtsStudentPackageAttribute("LimitedEnglishProficiencyEntryDate",
-                sdf.format(student.getLimitedEnglishProficiencyEntryDate())));
-        }
-
-        if (student.getTitleIIILanguageInstructionProgramType() == null) {
-            attributes.add(new RtsStudentPackageAttribute("TitleIIILanguageInstructionProgramType", ""));
-        } else {
-            attributes.add(new RtsStudentPackageAttribute("TitleIIILanguageInstructionProgramType",
-                student.getTitleIIILanguageInstructionProgramType()));
-        }
-
-        if (student.getPrimaryDisabilityType() == null) {
-            attributes.add(new RtsStudentPackageAttribute("PrimaryDisabilityType", ""));
-        } else {
-            attributes.add(new RtsStudentPackageAttribute("PrimaryDisabilityType",
-                student.getPrimaryDisabilityType()));
-        }
+        attributes.add(new RtsStudentPackageAttribute("PrimaryDisabilityType",
+            StringUtils.defaultString(student.getPrimaryDisabilityType())));
 
         return attributes;
     }
@@ -191,7 +164,7 @@ class RtsServiceImpl implements RtsService {
             RtsStudentPackageRelationship districtName = new RtsStudentPackageRelationship(
                 "DistrictName",
                 "District",
-                rtsRecord.get("entintyName"),
+                rtsRecord.get("entityName"),
                 rtsRecord.get("entityKey")
             );
 
@@ -239,5 +212,12 @@ class RtsServiceImpl implements RtsService {
         }
 
         return relationships;
+    }
+
+    private static String formatDateString(final XMLGregorianCalendar date) {
+        if(date == null) return "";
+
+        SimpleDateFormat sdf = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
+        return sdf.format(date);
     }
 }
