@@ -15,7 +15,7 @@ public class RtsStudentPackageAttribute {
      * @param name  name of the attribute
      * @param value value for the attribute
      */
-    public RtsStudentPackageAttribute(String name, String value) {
+    public RtsStudentPackageAttribute(final String name, final String value) {
         this.value = value;
         this.name = name;
     }

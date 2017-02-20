@@ -18,7 +18,7 @@ public interface RtsService {
      * @param attributeNames the attribute names to be used for lookup within the package
      * @return list of {@link tds.student.RtsStudentPackageAttribute} otherwise empty
      */
-    List<RtsStudentPackageAttribute> findRtsStudentPackageAttributes(String clientName, long studentId, String[] attributeNames);
+    List<RtsStudentPackageAttribute> findRtsStudentPackageAttributes(final String clientName, final long studentId, final String[] attributeNames);
 
     /**
      * Retrieves a fully populated student
@@ -27,5 +27,5 @@ public interface RtsService {
      * @param studentId  the student id
      * @return the fully populated student
      */
-    Optional<Student> findStudent(String clientName, long studentId);
+    Optional<Student> findStudent(final String clientName, final long studentId);
 }

@@ -23,7 +23,7 @@ class StudentRepositoryImpl implements StudentRepository {
 
     @Override
     @Deprecated
-    public Optional<Student> findStudentById(long id) {
+    public Optional<Student> findStudentById(final long id) {
         final SqlParameterSource parameters = new MapSqlParameterSource("id", id);
 
         String query = "SELECT studentkey AS id, studentid, statecode, clientname \n" +

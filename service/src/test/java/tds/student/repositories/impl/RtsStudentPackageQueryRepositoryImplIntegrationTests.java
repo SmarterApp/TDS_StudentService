@@ -1,6 +1,5 @@
 package tds.student.repositories.impl;
 
-import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,14 +12,13 @@ import org.springframework.jdbc.support.lob.LobCreator;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.InputStream;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Optional;
 
-import tds.dll.common.rtspackage.student.StudentPackageWriter;
 import tds.student.model.RtsStudentInfo;
 import tds.student.repositories.RtsStudentPackageQueryRepository;
+import tds.student.util.StudentPackageLoader;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -37,14 +35,8 @@ public class RtsStudentPackageQueryRepositoryImplIntegrationTests {
     private byte[] studentPackageBytes;
 
     @Before
-    public void setUp() throws Exception {
-        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("studentPackage.xml")) {
-            String studentPackage = IOUtils.toString(inputStream);
-            StudentPackageWriter writer = new StudentPackageWriter();
-            writer.writeObject(studentPackage);
-            studentPackageBytes = IOUtils.toByteArray(writer.getInputStream());
-        }
-
+    public void setUp() {
+        studentPackageBytes = StudentPackageLoader.getStudentPackageBytesFromClassPath(getClass(), "studentPackage.xml");
         insertData();
     }
 

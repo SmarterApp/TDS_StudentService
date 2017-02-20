@@ -32,13 +32,13 @@ class RtsServiceImpl implements RtsService {
 
 
     @Autowired
-    public RtsServiceImpl(RtsStudentPackageQueryRepository rtsStudentPackageQueryRepository) {
+    public RtsServiceImpl(final RtsStudentPackageQueryRepository rtsStudentPackageQueryRepository) {
         this.rtsStudentPackageQueryRepository = rtsStudentPackageQueryRepository;
     }
 
     @Override
     @Cacheable(CacheType.MEDIUM_TERM)
-    public List<RtsStudentPackageAttribute> findRtsStudentPackageAttributes(String clientName, long studentId, String[] attributeNames) {
+    public List<RtsStudentPackageAttribute> findRtsStudentPackageAttributes(final String clientName, final long studentId, final String[] attributeNames) {
         Optional<byte[]> maybePackage = rtsStudentPackageQueryRepository.findRtsStudentPackage(clientName, studentId);
         List<RtsStudentPackageAttribute> attributes = new ArrayList<>();
         if (!maybePackage.isPresent()) {
@@ -64,7 +64,7 @@ class RtsServiceImpl implements RtsService {
 
     @Override
     @Cacheable(CacheType.MEDIUM_TERM)
-    public Optional<Student> findStudent(String clientName, long studentId) {
+    public Optional<Student> findStudent(final String clientName, final long studentId) {
         Optional<RtsStudentInfo> maybeStudentInfo = rtsStudentPackageQueryRepository.findStudentInfo(clientName, studentId);
         if (!maybeStudentInfo.isPresent()) {
             return Optional.empty();
@@ -96,7 +96,8 @@ class RtsServiceImpl implements RtsService {
         return Optional.empty();
     }
 
-    private static List<RtsStudentPackageAttribute> parseAttributesOutOfPackage(IRtsPackageReader studentReader, tds.dll.common.rtspackage.student.data.Student student) {
+    private static List<RtsStudentPackageAttribute> parseAttributesOutOfPackage(final IRtsPackageReader studentReader,
+                                                                                final tds.dll.common.rtspackage.student.data.Student student) {
         List<RtsStudentPackageAttribute> attributes = new ArrayList<>();
 
         attributes.add(new RtsStudentPackageAttribute("LastName", studentReader.getFieldValue("LglLNm")));
@@ -148,7 +149,7 @@ class RtsServiceImpl implements RtsService {
         return attributes;
     }
 
-    private static List<RtsStudentPackageRelationship> parseRelationshipsOutOfPackage(IRtsPackageReader packageReader) {
+    private static List<RtsStudentPackageRelationship> parseRelationshipsOutOfPackage(final IRtsPackageReader packageReader) {
         //Replaces RtsPackageDLL._GetTesteeRelationships_SP
         List<RtsStudentPackageRelationship> relationships = new ArrayList<>();
 

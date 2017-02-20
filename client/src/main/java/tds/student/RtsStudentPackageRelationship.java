@@ -14,7 +14,10 @@ public class RtsStudentPackageRelationship {
      * @param value relationship value
      * @param entityKey relationship entityKey
      */
-    public RtsStudentPackageRelationship(String id, String type, String value, String entityKey) {
+    public RtsStudentPackageRelationship(final String id,
+                                         final String type,
+                                         final String value,
+                                         final String entityKey) {
         this.type = type;
         this.value = value;
         this.entityKey = entityKey;

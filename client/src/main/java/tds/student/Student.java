@@ -14,7 +14,7 @@ public class Student {
     private List<RtsStudentPackageAttribute> attributes;
     private List<RtsStudentPackageRelationship> relationships;
 
-    private Student(Builder builder) {
+    private Student(final Builder builder) {
         this.id = builder.id;
         this.loginSSID = builder.loginSSID;
         this.stateCode = builder.stateCode;
@@ -88,32 +88,32 @@ public class Student {
         private List<RtsStudentPackageAttribute> attributes;
         private List<RtsStudentPackageRelationship> relationships;
 
-        public Builder(long id, String clientName) {
+        public Builder(final long id, final String clientName) {
             this.id = id;
             this.clientName = clientName;
         }
 
-        public Builder withLoginSSID(String loginSSID) {
+        public Builder withLoginSSID(final String loginSSID) {
             this.loginSSID = loginSSID;
             return this;
         }
 
-        public Builder withStateCode(String stateCode) {
+        public Builder withStateCode(final String stateCode) {
             this.stateCode = stateCode;
             return this;
         }
 
-        public Builder withStudentPackage(tds.dll.common.rtspackage.student.data.Student studentPackage) {
+        public Builder withStudentPackage(final tds.dll.common.rtspackage.student.data.Student studentPackage) {
             this.studentPackage = studentPackage;
             return this;
         }
 
-        public Builder withAttributes(List<RtsStudentPackageAttribute> attributes) {
+        public Builder withAttributes(final List<RtsStudentPackageAttribute> attributes) {
             this.attributes = attributes;
             return this;
         }
 
-        public Builder withRelationships(List<RtsStudentPackageRelationship> relationships) {
+        public Builder withRelationships(final List<RtsStudentPackageRelationship> relationships) {
             this.relationships = relationships;
             return this;
         }

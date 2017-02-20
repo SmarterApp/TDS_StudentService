@@ -16,14 +16,14 @@ class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
 
     @Autowired
-    public StudentServiceImpl(StudentRepository studentRepository) {
+    public StudentServiceImpl(final StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
 
     @Override
     @Cacheable(CacheType.LONG_TERM)
     @Deprecated
-    public Optional<Student> findStudentById(long id) {
+    public Optional<Student> findStudentById(final long id) {
         return studentRepository.findStudentById(id);
     }
 }

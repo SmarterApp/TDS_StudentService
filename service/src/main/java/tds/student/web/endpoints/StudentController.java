@@ -40,7 +40,7 @@ class StudentController {
     @RequestMapping(value = "students/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @Deprecated
-    ResponseEntity<Student> findStudentById(@PathVariable long id) {
+    ResponseEntity<Student> findStudentById(@PathVariable final long id) {
         final Student student = studentService.findStudentById(id)
             .orElseThrow(() -> new NotFoundException("Could not find student with id %d", id));
 
@@ -49,9 +49,9 @@ class StudentController {
 
     @RequestMapping(value = "students/{id}/rts/{clientName}/{attributes}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    ResponseEntity<List<RtsStudentPackageAttribute>> findRtsStudentPackageAttributes(@PathVariable long id,
-                                                                                     @PathVariable String clientName,
-                                                                                     @MatrixVariable(required = false) String[] attributes) {
+    ResponseEntity<List<RtsStudentPackageAttribute>> findRtsStudentPackageAttributes(@PathVariable final long id,
+                                                                                     @PathVariable final String clientName,
+                                                                                     @MatrixVariable(required = false) final String[] attributes) {
         if (attributes == null || attributes.length == 0) {
             throw new IllegalArgumentException("attributes with values is required");
         }
@@ -61,7 +61,7 @@ class StudentController {
 
     @RequestMapping(value = "{clientName}/students/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    ResponseEntity<Student> findStudent(@PathVariable String clientName, @PathVariable long id) {
+    ResponseEntity<Student> findStudent(@PathVariable final String clientName, @PathVariable final long id) {
         final Student student = rtsService.findStudent(clientName, id)
             .orElseThrow(() -> new NotFoundException("Could not find student with id %d", id));
 

@@ -23,13 +23,13 @@ public class RtsStudentPackageQueryRepositoryImpl implements RtsStudentPackageQu
     private final LobHandler lobHandler;
 
     @Autowired
-    public RtsStudentPackageQueryRepositoryImpl(NamedParameterJdbcTemplate jdbcTemplate) {
+    public RtsStudentPackageQueryRepositoryImpl(final NamedParameterJdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
         lobHandler = new DefaultLobHandler();
     }
 
     @Override
-    public Optional<byte[]> findRtsStudentPackage(String clientName, long studentId) {
+    public Optional<byte[]> findRtsStudentPackage(final String clientName, final long studentId) {
         //Legacy Query from RtsPackageDLL.getPackageByKeyAndClientName
         SqlParameterSource parameters = new MapSqlParameterSource("clientName", clientName)
             .addValue("studentId", studentId);
@@ -54,7 +54,7 @@ public class RtsStudentPackageQueryRepositoryImpl implements RtsStudentPackageQu
     }
 
     @Override
-    public Optional<RtsStudentInfo> findStudentInfo(String clientName, long studentId) {
+    public Optional<RtsStudentInfo> findStudentInfo(final String clientName, final long studentId) {
         final SqlParameterSource parameters = new MapSqlParameterSource("id", studentId)
             .addValue("clientName", clientName);
 

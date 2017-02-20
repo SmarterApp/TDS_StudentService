@@ -7,7 +7,11 @@ public class RtsStudentInfo {
     private String clientName;
     private byte[] studentPackage;
 
-    public RtsStudentInfo(long id, String loginSSID, String stateCode, String clientName, byte[] studentPackage) {
+    public RtsStudentInfo(final long id,
+                          final String loginSSID,
+                          final String stateCode,
+                          final String clientName,
+                          final byte[] studentPackage) {
         this.id = id;
         this.loginSSID = loginSSID;
         this.stateCode = stateCode;

@@ -1,24 +1,20 @@
 package tds.student.services.impl;
 
-import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 
-import tds.dll.common.rtspackage.common.exception.RtsPackageWriterException;
-import tds.dll.common.rtspackage.student.StudentPackageWriter;
 import tds.student.RtsStudentPackageAttribute;
 import tds.student.Student;
 import tds.student.model.RtsStudentInfo;
 import tds.student.repositories.RtsStudentPackageQueryRepository;
 import tds.student.services.RtsService;
+import tds.student.util.StudentPackageLoader;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -33,14 +29,9 @@ public class RtsServiceImplTest {
     private byte[] studentPackageBytes;
 
     @Before
-    public void setUp() throws IOException, RtsPackageWriterException {
+    public void setUp() {
         rtsService = new RtsServiceImpl(rtsRepository);
-        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("studentPackage.xml")) {
-            String studentPackage = IOUtils.toString(inputStream);
-            StudentPackageWriter writer = new StudentPackageWriter();
-            writer.writeObject(studentPackage);
-            studentPackageBytes = IOUtils.toByteArray(writer.getInputStream());
-        }
+        studentPackageBytes = StudentPackageLoader.getStudentPackageBytesFromClassPath(getClass(), "studentPackage.xml");
     }
 
     @Test

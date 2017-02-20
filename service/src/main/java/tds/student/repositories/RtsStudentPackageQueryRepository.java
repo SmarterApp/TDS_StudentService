@@ -15,7 +15,7 @@ public interface RtsStudentPackageQueryRepository {
      * @param studentId  student id for the package
      * @return byte array containing the serialized gzipped data if found otherwise empty
      */
-    Optional<byte[]> findRtsStudentPackage(String clientName, long studentId);
+    Optional<byte[]> findRtsStudentPackage(final String clientName, final long studentId);
 
     /**
      * Finds the {@link tds.student.model.RtsStudentInfo} for the client name and id
@@ -24,5 +24,5 @@ public interface RtsStudentPackageQueryRepository {
      * @param studentId  the student id
      * @return {@link tds.student.model.RtsStudentInfo}
      */
-    Optional<RtsStudentInfo> findStudentInfo(String clientName, long studentId);
+    Optional<RtsStudentInfo> findStudentInfo(final String clientName, final long studentId);
 }

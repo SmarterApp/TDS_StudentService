@@ -16,5 +16,5 @@ public interface StudentRepository {
      * @deprecated Please use {@link tds.student.repositories.RtsStudentPackageQueryRepository} findStudent instead
      */
     @Deprecated
-    Optional<Student> findStudentById(long id);
+    Optional<Student> findStudentById(final long id);
 }
