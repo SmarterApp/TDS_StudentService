@@ -120,12 +120,9 @@ class RtsServiceImpl implements RtsService {
         attributes.add(new RtsStudentPackageAttribute("EconomicDisadvantageStatus", student.getEconomicDisadvantageStatus()));
         // SB-512
         attributes.add(new RtsStudentPackageAttribute("GradeLevelWhenAssessed", student.getGradeLevelWhenAssessed()));
-        if (student.getLEPExitDate() == null) {
-            attributes.add(new RtsStudentPackageAttribute("LEPExitDate", ""));
-        } else {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            attributes.add(new RtsStudentPackageAttribute("LEPExitDate", sdf.format(student.getLEPExitDate())));
-        }
+
+        attributes.add(new RtsStudentPackageAttribute("LEPExitDate",
+            formatDateString(student.getLEPExitDate())));
 
         attributes.add(new RtsStudentPackageAttribute("AlternateSSID", student.getAlternateSSID()));
         attributes.add(new RtsStudentPackageAttribute("MigrantStatus", StringUtils.defaultString(student.getMigrantStatus())));
@@ -219,6 +216,6 @@ class RtsServiceImpl implements RtsService {
         if(date == null) return "";
 
         SimpleDateFormat sdf = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
-        return sdf.format(date);
+        return sdf.format(date.toGregorianCalendar().getTime());
     }
 }
