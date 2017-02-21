@@ -17,6 +17,7 @@ import java.net.URI;
 import java.util.Collections;
 import java.util.Optional;
 
+import tds.common.configuration.SecurityConfiguration;
 import tds.common.web.advice.ExceptionAdvice;
 import tds.student.RtsStudentPackageAttribute;
 import tds.student.Student;
@@ -35,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(StudentController.class)
-@Import(ExceptionAdvice.class)
+@Import({ExceptionAdvice.class, SecurityConfiguration.class})
 public class StudentControllerIntegrationTests {
     @Autowired
     private MockMvc http;
