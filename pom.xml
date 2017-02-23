@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.opentestsystem.student</groupId>
+    <groupId>org.opentestsystem.delivery</groupId>
     <artifactId>tds-student</artifactId>
     <name>tds-student</name>
     <packaging>pom</packaging>
@@ -25,7 +25,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.plugin.version>3.5.1</maven.compiler.plugin.version>
 
-        <tds-student-client.version>0.0.1-SNAPSHOT</tds-student-client.version>
         <tds-common.version>0.0.1</tds-common.version>
 
         <unit-tests.skip>false</unit-tests.skip>

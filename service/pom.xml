@@ -4,6 +4,18 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>tds-student-service</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <packaging>jar</packaging>
+    <name>tds-student-service</name>
+
+    <description>The microservice for students</description>
+
+    <parent>
+        <groupId>org.opentestsystem.delivery</groupId>
+        <artifactId>tds-student</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -24,12 +36,12 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.opentestsystem.student</groupId>
+            <groupId>org.opentestsystem.delivery</groupId>
             <artifactId>tds-student-client</artifactId>
-            <version>${tds-student-client.version}</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.opentestsystem.common</groupId>
+            <groupId>org.opentestsystem.delivery</groupId>
             <artifactId>tds-common</artifactId>
             <version>${tds-common.version}</version>
         </dependency>
@@ -223,18 +235,6 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    <version>0.0.1-SNAPSHOT</version>
-
-    <packaging>jar</packaging>
-    <name>tds-student-service</name>
-
-    <description>The microservice for students</description>
-
-    <parent>
-        <groupId>org.opentestsystem.student</groupId>
-        <artifactId>tds-student</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
-    </parent>
 
     <build>
         <plugins>
