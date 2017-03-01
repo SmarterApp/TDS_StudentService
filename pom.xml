@@ -39,7 +39,7 @@
         <h2-database.version>1.4.191</h2-database.version>
         <spring.cloud.config.version>1.2.2.RELEASE</spring.cloud.config.version>
 
-        <tds-common.version>0.0.1</tds-common.version>
+        <tds-common.version>0.0.2</tds-common.version>
 
         <maven.compiler.plugin.version>3.5.1</maven.compiler.plugin.version>
         <maven.jar.plugin.version>2.3.2</maven.jar.plugin.version>
