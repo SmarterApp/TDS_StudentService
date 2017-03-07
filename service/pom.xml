@@ -55,7 +55,7 @@
         <dependency>
             <groupId>org.opentestsystem.delivery</groupId>
             <artifactId>tds-dll-common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${tds-dll.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework.security</groupId>
