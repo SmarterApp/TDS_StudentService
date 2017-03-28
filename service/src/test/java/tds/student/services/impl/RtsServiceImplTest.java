@@ -95,5 +95,13 @@ public class RtsServiceImplTest {
         assertThat(student.getStudentPackage()).isNotNull();
         assertThat(student.getRelationships()).hasSize(6);
         assertThat(student.getAttributes()).hasSize(27);
+
+        Optional<String> stateAbbrev = student.getRelationships().stream()
+            .filter(rel -> rel.getId().equals("StateAbbreviation"))
+            .map(rel -> rel.getValue())
+            .findFirst();
+
+        assertThat(stateAbbrev).isPresent();
+        assertThat(stateAbbrev.get()).isEqualTo("OR");
     }
 }
