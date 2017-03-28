@@ -194,7 +194,7 @@ class RtsServiceImpl implements RtsService {
             RtsStudentPackageRelationship state = new RtsStudentPackageRelationship(
                 "StateAbbreviation",
                 "State",
-                rtsRecord.get("entityName"),
+                rtsRecord.get("entityId"),
                 rtsRecord.get("entityKey")
             );
 
