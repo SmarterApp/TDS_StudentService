@@ -36,7 +36,7 @@
         <rest-assured.version>2.9.0</rest-assured.version>
         <h2-database.version>1.4.191</h2-database.version>
 
-        <tds-common.version>0.0.9-SNAPSHOT</tds-common.version>
+        <tds-common.version>0.0.9</tds-common.version>
         <tds-dll.version>3.0.0</tds-dll.version>
 
         <maven.compiler.plugin.version>3.5.1</maven.compiler.plugin.version>
