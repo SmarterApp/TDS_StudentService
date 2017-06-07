@@ -5,7 +5,7 @@
     <artifactId>tds-student</artifactId>
     <name>tds-student</name>
     <packaging>pom</packaging>
-    <version>0.0.3-SNAPSHOT</version>
+    <version>0.0.4-SNAPSHOT</version>
 
     <scm>
         <connection>scm:git:https://github.com/SmarterApp/TDS_StudentService.git</connection>
