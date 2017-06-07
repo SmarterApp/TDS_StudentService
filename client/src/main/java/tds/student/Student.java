@@ -10,7 +10,6 @@ public class Student {
     private String loginSSID;
     private String stateCode;
     private String clientName;
-    private tds.dll.common.rtspackage.student.data.Student studentPackage;
     private List<RtsStudentPackageAttribute> attributes;
     private List<RtsStudentPackageRelationship> relationships;
 
@@ -19,7 +18,6 @@ public class Student {
         this.loginSSID = builder.loginSSID;
         this.stateCode = builder.stateCode;
         this.clientName = builder.clientName;
-        this.studentPackage = builder.studentPackage;
         this.attributes = builder.attributes;
         this.relationships = builder.relationships;
     }
@@ -59,13 +57,6 @@ public class Student {
     }
 
     /**
-     * @return the student package data from ART
-     */
-    public tds.dll.common.rtspackage.student.data.Student getStudentPackage() {
-        return studentPackage;
-    }
-
-    /**
      * @return the attributes for a student
      */
     public List<RtsStudentPackageAttribute> getAttributes() {
@@ -84,7 +75,6 @@ public class Student {
         private String loginSSID;
         private String stateCode;
         private String clientName;
-        private tds.dll.common.rtspackage.student.data.Student studentPackage;
         private List<RtsStudentPackageAttribute> attributes;
         private List<RtsStudentPackageRelationship> relationships;
 
@@ -100,11 +90,6 @@ public class Student {
 
         public Builder withStateCode(final String stateCode) {
             this.stateCode = stateCode;
-            return this;
-        }
-
-        public Builder withStudentPackage(final tds.dll.common.rtspackage.student.data.Student studentPackage) {
-            this.studentPackage = studentPackage;
             return this;
         }
 

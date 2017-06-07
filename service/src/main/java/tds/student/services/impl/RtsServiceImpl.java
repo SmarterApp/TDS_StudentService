@@ -82,7 +82,6 @@ class RtsServiceImpl implements RtsService {
                 Student student = new Student.Builder(studentInfo.getId(), studentInfo.getClientName())
                     .withLoginSSID(studentInfo.getLoginSSID())
                     .withStateCode(studentInfo.getStateCode())
-                    .withStudentPackage(rtsStudent)
                     .withAttributes(attributes)
                     .withRelationships(relationships)
                     .build();
