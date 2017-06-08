@@ -5,8 +5,10 @@ package tds.student;
  */
 public class RtsStudentPackageAttribute {
     public static final String EXTERNAL_ID = "ExternalID";
+    public static final String BLOCKED_SUBJECT = "BLOCKEDSUBJECT";
     public static final String ENTITY_NAME = "--ENTITYNAME--";
     public static final String ACCOMMODATIONS = "--ACCOMMODATIONS--";
+    public static final String ELIGIBLE_ASSESSMENTS = "--ELIGIBLETESTS--";
 
     private String value;
     private String name;
