@@ -11,25 +11,13 @@
     <parent>
         <groupId>org.opentestsystem.delivery</groupId>
         <artifactId>tds-student</artifactId>
-        <version>0.0.2-SNAPSHOT</version>
+        <version>3.1.0.RELEASE</version>
     </parent>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-config</artifactId>
-                <version>${spring.cloud.config.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <dependencies>
         <dependency>
@@ -121,11 +109,6 @@
 
         <!-- Spring dependencies -->
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-config</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-hateoas</artifactId>
             <exclusions>
@@ -177,6 +160,11 @@
             <artifactId>jackson-datatype-jsr310</artifactId>
             <version>2.8.3</version>
         </dependency>
+        <dependency>
+            <groupId>xerces</groupId>
+            <artifactId>xercesImpl</artifactId>
+            <version>2.11.0</version>
+        </dependency>
 
         <!-- Apache -->
         <dependency>
@@ -196,13 +184,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.flywaydb</groupId>
-            <artifactId>flyway-core</artifactId>
-            <version>${flyway.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -252,7 +233,6 @@
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
-                    <skipTests>${unit-tests.skip}</skipTests>
                     <excludes>
                         <exclude>**/*IntegrationTests.java</exclude>
                     </excludes>

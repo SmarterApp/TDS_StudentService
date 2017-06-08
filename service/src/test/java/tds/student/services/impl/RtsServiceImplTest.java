@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 import tds.student.RtsStudentPackageAttribute;
+import tds.student.RtsStudentPackageRelationship;
 import tds.student.Student;
 import tds.student.model.RtsStudentInfo;
 import tds.student.repositories.RtsStudentPackageQueryRepository;
@@ -92,8 +93,15 @@ public class RtsServiceImplTest {
         assertThat(student.getLoginSSID()).isEqualTo("loginSSID");
         assertThat(student.getStateCode()).isEqualTo("CA");
         assertThat(student.getClientName()).isEqualTo("SBAC_PT");
-        assertThat(student.getStudentPackage()).isNotNull();
         assertThat(student.getRelationships()).hasSize(6);
         assertThat(student.getAttributes()).hasSize(27);
+
+        Optional<String> stateAbbrev = student.getRelationships().stream()
+            .filter(rel -> rel.getId().equals("StateAbbreviation"))
+            .map(RtsStudentPackageRelationship::getValue)
+            .findFirst();
+
+        assertThat(stateAbbrev).isPresent();
+        assertThat(stateAbbrev.get()).isEqualTo("OR");
     }
 }

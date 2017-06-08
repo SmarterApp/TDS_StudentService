@@ -82,7 +82,6 @@ class RtsServiceImpl implements RtsService {
                 Student student = new Student.Builder(studentInfo.getId(), studentInfo.getClientName())
                     .withLoginSSID(studentInfo.getLoginSSID())
                     .withStateCode(studentInfo.getStateCode())
-                    .withStudentPackage(rtsStudent)
                     .withAttributes(attributes)
                     .withRelationships(relationships)
                     .build();
@@ -194,7 +193,7 @@ class RtsServiceImpl implements RtsService {
             RtsStudentPackageRelationship state = new RtsStudentPackageRelationship(
                 "StateAbbreviation",
                 "State",
-                rtsRecord.get("entityName"),
+                rtsRecord.get("entityId"),
                 rtsRecord.get("entityKey")
             );
 
