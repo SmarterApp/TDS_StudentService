@@ -5,10 +5,6 @@ management:
 
 ---
 spring:
-  datasource:
-    dbcp2:
-      test-while-idle: true
-spring:
   profiles: local-development
   datasource:
     url: ${sbac.jdbc.host}/session
@@ -21,6 +17,8 @@ spring:
       minimum-idle: 8
       idle-timeout: 10000
       connectionTestQuery: "SELECT 1"
+    dbcp2:
+      test-while-idle: true
   mvc:
     throw-exception-if-no-handler-found: false
   resources:
