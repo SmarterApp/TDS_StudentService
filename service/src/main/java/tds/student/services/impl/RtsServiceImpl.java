@@ -140,7 +140,7 @@ class RtsServiceImpl implements RtsService {
         attributes.add(new RtsStudentPackageAttribute("MigrantStatus", StringUtils.defaultString(student.getMigrantStatus())));
         attributes.add(new RtsStudentPackageAttribute("LanguageCode", StringUtils.defaultString(student.getLanguageCode())));
 
-        attributes.add(new RtsStudentPackageAttribute("EnglishLanguageProficiencLevel",
+        attributes.add(new RtsStudentPackageAttribute("EnglishLanguageProficiencyLevel",
             StringUtils.defaultString(student.getEnglishLanguageProficiencyLevel())));
 
         attributes.add(new RtsStudentPackageAttribute("FirstEntryDateIntoUSSchool",
