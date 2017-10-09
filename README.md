@@ -63,4 +63,4 @@ To build the service and run integration tests:
 There are separate pages for other documentation.
 
 * [Spring Configuration Example](documentation/spring_configuration.md)
-* [Running Microservice](documentation/running_documentation.md)
+* [Running Microservice](documentation/running_microservice.md)
